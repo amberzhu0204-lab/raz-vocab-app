@@ -1,0 +1,1896 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "name": "RAZ 22: Five Seconds to Blast Off",
+      "description": "太空探索",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 4
+    },
+    {
+      "id": 2,
+      "name": "RAZ 23: Crazy Cakes (1)",
+      "description": "食物与食材",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 9
+    },
+    {
+      "id": 3,
+      "name": "RAZ 24: Crazy Cakes (2)",
+      "description": "创意蛋糕",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 7
+    },
+    {
+      "id": 4,
+      "name": "RAZ 25: Skateboards",
+      "description": "滑板运动",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 7
+    },
+    {
+      "id": 5,
+      "name": "RAZ 26: City Places",
+      "description": "城市建筑",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 7
+    },
+    {
+      "id": 6,
+      "name": "RAZ 27: Let's Make Lemonade",
+      "description": "制作柠檬水",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 9
+    },
+    {
+      "id": 7,
+      "name": "RAZ 29: Let's Carve a Pumpkin",
+      "description": "雕刻南瓜",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 9
+    },
+    {
+      "id": 8,
+      "name": "RAZ 31: Kaden's Kwanzaa",
+      "description": "宽扎节庆祝",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 6
+    },
+    {
+      "id": 9,
+      "name": "RAZ 32: The Leaning Tower",
+      "description": "比萨斜塔",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 13
+    },
+    {
+      "id": 10,
+      "name": "RAZ 33: Goodbye Snow",
+      "description": "清除积雪",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 10
+    },
+    {
+      "id": 11,
+      "name": "RAZ 34: Muddy Boots",
+      "description": "泥泞的靴子",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 15
+    },
+    {
+      "id": 12,
+      "name": "RAZ 35: Caring for Earth",
+      "description": "保护地球",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 5
+    },
+    {
+      "id": 13,
+      "name": "RAZ 38: Hooray for the Farmer's Market",
+      "createdAt": "2026-05-17T05:23:38.723Z",
+      "wordCount": 6
+    },
+    {
+      "id": 14,
+      "name": "RAZ 39: Fantastic Phil",
+      "createdAt": "2026-05-17T05:23:38.723Z",
+      "wordCount": 8
+    },
+    {
+      "id": 15,
+      "name": "RAZ 40: Shoes Men Wear",
+      "createdAt": "2026-05-17T05:23:38.723Z",
+      "wordCount": 14
+    },
+    {
+      "id": 16,
+      "name": "RAZ 42: Getting Ready for School",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 1
+    },
+    {
+      "id": 17,
+      "name": "RAZ 43: Stop Snoring",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 8
+    },
+    {
+      "id": 18,
+      "name": "RAZ 44: When I Grow Up",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 6
+    },
+    {
+      "id": 19,
+      "name": "RAZ 45: Make a Tree Friend",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 13
+    },
+    {
+      "id": 20,
+      "name": "RAZ 47: Jobs We Do at School",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 7
+    },
+    {
+      "id": 21,
+      "name": "RAZ 48: What's in the Box",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 8
+    },
+    {
+      "id": 22,
+      "name": "RAZ 50: Hugs",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 10
+    },
+    {
+      "id": 23,
+      "name": "RAZ 51: Lost and Found",
+      "createdAt": "2026-05-17T05:23:38.724Z",
+      "wordCount": 11
+    }
+  ],
+  "words": [
+    {
+      "lessonId": 1,
+      "word": "Blastoff",
+      "chinese": "发射升空",
+      "phrase": "The rocket is ready for blastoff",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 1,
+      "word": "Crowd",
+      "chinese": "人群",
+      "phrase": "A big crowd watched the launch",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 1,
+      "word": "Control room",
+      "chinese": "控制室",
+      "phrase": "Scientists work in the control room",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 1,
+      "word": "Space exploration",
+      "chinese": "太空探索",
+      "phrase": "Space exploration is exciting",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Dairy",
+      "chinese": "奶制品",
+      "phrase": "Milk and cheese are dairy foods",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Fried rice",
+      "chinese": "炒饭",
+      "phrase": "Mom made delicious fried rice",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Ground beef",
+      "chinese": "牛肉碎",
+      "phrase": "Ground beef is used to make burgers",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Black bean",
+      "chinese": "黑豆",
+      "phrase": "Black beans are good for you",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Tofu",
+      "chinese": "豆腐",
+      "phrase": "Tofu is made from soybeans",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Burger",
+      "chinese": "汉堡",
+      "phrase": "I like burgers with cheese",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Peanut butter",
+      "chinese": "花生酱",
+      "phrase": "Peanut butter on toast is yummy",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "In different ways",
+      "chinese": "以不同的方式",
+      "phrase": "We cook food in different ways",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Food made from animals",
+      "chinese": "动物制成的食物",
+      "phrase": "Milk, eggs, and meat are food made from animals",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "A giant rooster",
+      "chinese": "一只巨型公鸡",
+      "phrase": "The cake looked like a giant rooster",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "A fancy crown",
+      "chinese": "一顶华丽王冠",
+      "phrase": "She wore a fancy crown on her head",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Hook",
+      "chinese": "钩子",
+      "phrase": "The pirate had a hook for a hand",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Beehive",
+      "chinese": "蜂巢",
+      "phrase": "Bees live in a beehive",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Treasure chest",
+      "chinese": "宝箱",
+      "phrase": "Pirates found a treasure chest",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Magic",
+      "chinese": "魔法",
+      "phrase": "The magician did a magic trick",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Unicorn",
+      "chinese": "独角兽",
+      "phrase": "The unicorn has a beautiful horn",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Board",
+      "chinese": "滑板",
+      "phrase": "He stood on the skateboard",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Wheels",
+      "chinese": "轮子",
+      "phrase": "The board has four wheels",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Stand",
+      "chinese": "站立",
+      "phrase": "Stand on the board carefully",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Sit",
+      "chinese": "坐下",
+      "phrase": "You can also sit on the board",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Stair",
+      "chinese": "楼梯",
+      "phrase": "He skated down the stairs",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Contests",
+      "chinese": "比赛",
+      "phrase": "She won many skateboard contests",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Do tricks",
+      "chinese": "做技巧动作",
+      "phrase": "He can do cool tricks on his board",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Find out",
+      "chinese": "发现",
+      "phrase": "Let us find out about the city",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Come",
+      "chinese": "来",
+      "phrase": "Come and see the tall buildings",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Skyscraper",
+      "chinese": "摩天大楼",
+      "phrase": "The skyscraper is very tall",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Stadium",
+      "chinese": "体育场",
+      "phrase": "People watch games at the stadium",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Parking garage",
+      "chinese": "停车场",
+      "phrase": "Cars park in the parking garage",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Park cars",
+      "chinese": "停车",
+      "phrase": "People park cars in the garage",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Work",
+      "chinese": "工作",
+      "phrase": "Many people work in the city",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Thirsty",
+      "chinese": "口渴的",
+      "phrase": "I am thirsty on a hot day",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Spot",
+      "chinese": "发现",
+      "phrase": "Spot the lemons on the tree",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Lemon seeds",
+      "chinese": "柠檬籽",
+      "phrase": "Take out the lemon seeds",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Pick out",
+      "chinese": "挑出",
+      "phrase": "Pick out the seeds from the lemon",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Stir",
+      "chinese": "搅拌",
+      "phrase": "Stir the lemonade with a spoon",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Spoon",
+      "chinese": "勺子",
+      "phrase": "Use a spoon to mix it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Pitcher",
+      "chinese": "水壶",
+      "phrase": "Pour the lemonade into a pitcher",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Sticker",
+      "chinese": "贴纸",
+      "phrase": "Put a sticker on the cup",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Spill",
+      "chinese": "洒出",
+      "phrase": "Be careful not to spill the drink",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Adult",
+      "chinese": "成年人",
+      "phrase": "Ask an adult to help you",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Carve",
+      "chinese": "雕刻",
+      "phrase": "Let's carve a pumpkin",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Cut out",
+      "chinese": "切出",
+      "phrase": "Cut out the top of the pumpkin",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Top",
+      "chinese": "顶部",
+      "phrase": "Remove the top of the pumpkin",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Scoop out",
+      "chinese": "舀出",
+      "phrase": "Scoop out the seeds inside",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Bake",
+      "chinese": "烘烤",
+      "phrase": "Bake the pumpkin seeds for a snack",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Snack",
+      "chinese": "零食",
+      "phrase": "The seeds make a tasty snack",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Draw",
+      "chinese": "画",
+      "phrase": "Draw a face on the pumpkin",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Inside",
+      "chinese": "里面",
+      "phrase": "Look inside the pumpkin",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Celebrate",
+      "chinese": "庆祝",
+      "phrase": "We celebrate Kwanzaa with family",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Light candles",
+      "chinese": "点蜡烛",
+      "phrase": "We light candles each night",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Share",
+      "chinese": "分享",
+      "phrase": "Share stories with your family",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Gift",
+      "chinese": "礼物",
+      "phrase": "Give a gift to someone you love",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Make crafts",
+      "chinese": "做手工",
+      "phrase": "Let's make crafts together",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Eat a feast",
+      "chinese": "吃大餐",
+      "phrase": "The family eats a feast together",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Build",
+      "chinese": "建造",
+      "phrase": "They wanted to build a tall tower",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Bell tower",
+      "chinese": "钟楼",
+      "phrase": "It was meant to be a bell tower",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Take many years",
+      "chinese": "花很多年",
+      "phrase": "It took many years to build",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Right away",
+      "chinese": "立刻",
+      "phrase": "It did not lean right away",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Start",
+      "chinese": "开始",
+      "phrase": "The tower started to lean slowly",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Lean",
+      "chinese": "倾斜",
+      "phrase": "The tower began to lean",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Soft ground",
+      "chinese": "松软地面",
+      "phrase": "It was built on soft ground",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Skinny",
+      "chinese": "细长的",
+      "phrase": "The tower looks tall and skinny",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Dig",
+      "chinese": "挖掘",
+      "phrase": "They tried to dig and fix it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Stop",
+      "chinese": "停止",
+      "phrase": "They wanted to stop the leaning",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Rope",
+      "chinese": "绳子",
+      "phrase": "They used ropes to help hold it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Weight",
+      "chinese": "重量",
+      "phrase": "They added weight to balance it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Safe",
+      "chinese": "安全的",
+      "phrase": "Now the tower is safe",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Remove",
+      "chinese": "移除",
+      "phrase": "We need to remove the snow",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Get in the way",
+      "chinese": "挡住路",
+      "phrase": "The snow gets in the way",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Shovel",
+      "chinese": "铲子",
+      "phrase": "Use a shovel to move snow",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Brush",
+      "chinese": "刷子",
+      "phrase": "Use a brush to clean the car",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snowblower",
+      "chinese": "吹雪机",
+      "phrase": "A snowblower clears snow fast",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snowplow",
+      "chinese": "铲雪车",
+      "phrase": "The snowplow clears the road",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Salt",
+      "chinese": "盐",
+      "phrase": "Salt helps melt the ice",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snow melter",
+      "chinese": "融雪剂",
+      "phrase": "A snow melter turns snow to water",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Take away",
+      "chinese": "带走",
+      "phrase": "Trucks take away the snow",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snow dump",
+      "chinese": "堆雪场",
+      "phrase": "They bring snow to a snow dump",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Kitchen",
+      "chinese": "厨房",
+      "phrase": "He walked into the kitchen",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Snack",
+      "chinese": "零食",
+      "phrase": "He wanted to get a snack",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Muddy tracks",
+      "chinese": "泥脚印",
+      "phrase": "His boots left muddy tracks",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Clean",
+      "chinese": "打扫",
+      "phrase": "Mom had to clean the floor",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Floor",
+      "chinese": "地板",
+      "phrase": "The floor was covered in mud",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Notice",
+      "chinese": "注意到",
+      "phrase": "Mom noticed the muddy tracks",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Living room",
+      "chinese": "客厅",
+      "phrase": "The tracks went to the living room",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Mop",
+      "chinese": "拖把",
+      "phrase": "She used a mop to clean up",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Hallway",
+      "chinese": "走廊",
+      "phrase": "The mud was in the hallway too",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Front door",
+      "chinese": "前门",
+      "phrase": "He came in through the front door",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Behind",
+      "chinese": "后面",
+      "phrase": "Look behind the door",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Mess",
+      "chinese": "混乱",
+      "phrase": "What a big mess!",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Look at",
+      "chinese": "看着",
+      "phrase": "Look at your muddy boots!",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Boots",
+      "chinese": "靴子",
+      "phrase": "Take off your boots please",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Shake head",
+      "chinese": "摇头",
+      "phrase": "Mom just shook her head",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Tend gardens",
+      "chinese": "照料花园",
+      "phrase": "We tend gardens to grow plants",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Reuse",
+      "chinese": "再利用",
+      "phrase": "Reuse your water bottle",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Recycle",
+      "chinese": "回收",
+      "phrase": "Recycle paper and plastic",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Save water",
+      "chinese": "节约用水",
+      "phrase": "Turn off the tap to save water",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Electricity",
+      "chinese": "电",
+      "phrase": "Turn off lights to save electricity",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 13,
+      "word": "Farmer",
+      "chinese": "农民",
+      "phrase": "The farmer grows food on the farm",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 13,
+      "word": "Baker",
+      "chinese": "面包师",
+      "phrase": "The baker makes fresh bread every morning",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 13,
+      "word": "Gardener",
+      "chinese": "园丁",
+      "phrase": "The gardener waters the flowers",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 13,
+      "word": "Artist",
+      "chinese": "艺术家",
+      "phrase": "The artist paints a beautiful picture",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 13,
+      "word": "Band",
+      "chinese": "乐队",
+      "phrase": "The band plays music at the market",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 13,
+      "word": "Make friends",
+      "chinese": "交朋友",
+      "phrase": "You can make friends at school",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Family",
+      "chinese": "家人",
+      "phrase": "My family eats dinner together",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Alphabet",
+      "chinese": "字母表",
+      "phrase": "I can sing the alphabet song",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Find a photo",
+      "chinese": "找一张照片",
+      "phrase": "Can you find a photo of a cat",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Dolphin",
+      "chinese": "海豚",
+      "phrase": "The dolphin jumps out of the water",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Phantom",
+      "chinese": "幽灵",
+      "phrase": "There is no phantom in the dark",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Triump",
+      "chinese": "胜利",
+      "phrase": "Winning the race was a great triumph",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Busy",
+      "chinese": "忙碌的",
+      "phrase": "Mom is busy cooking dinner",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 14,
+      "word": "Relief",
+      "chinese": "放心",
+      "phrase": "I felt relief when I found my toy",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Flip flop",
+      "chinese": "人字拖",
+      "phrase": "I wear flip flops at the beach",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Sneaker",
+      "chinese": "运动鞋",
+      "phrase": "He wears sneakers to run fast",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Cleat",
+      "chinese": "钉鞋",
+      "phrase": "Soccer players wear cleats on the field",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Soccer",
+      "chinese": "足球",
+      "phrase": "I play soccer with my friends",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Hiking boots",
+      "chinese": "登山靴",
+      "phrase": "We wear hiking boots on the mountain",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Woods",
+      "chinese": "树林",
+      "phrase": "We walk through the woods",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Work boots",
+      "chinese": "工装靴",
+      "phrase": "Dad wears work boots to the construction site",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Winter boots",
+      "chinese": "冬靴",
+      "phrase": "I wear winter boots in the snow",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Wingips",
+      "chinese": "翼尖鞋",
+      "phrase": "Wingtips are fancy leather shoes",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Slippers",
+      "chinese": "拖鞋",
+      "phrase": "I wear soft slippers at home",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Tough",
+      "chinese": "结实",
+      "phrase": "These boots are very tough",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Soft",
+      "chinese": "柔软",
+      "phrase": "The bunny feels soft",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Warm",
+      "chinese": "温暖",
+      "phrase": "Winter boots keep my feet warm",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 15,
+      "word": "Pumps",
+      "chinese": "高跟鞋",
+      "phrase": "Mom wears pumps to the party",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.723Z"
+    },
+    {
+      "lessonId": 16,
+      "word": "Backpacker",
+      "chinese": "背包",
+      "phrase": "I put my books in my backpack",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Snore",
+      "chinese": "打呼噜",
+      "phrase": "Grandpa starts to snore when he sleeps",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Wake up",
+      "chinese": "醒来",
+      "phrase": "I wake up early every morning",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Squeeze nose",
+      "chinese": "捏鼻子",
+      "phrase": "She squeezes her nose to stop the smell",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Keep",
+      "chinese": "保持",
+      "phrase": "Keep trying and you will succeed",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Tickle",
+      "chinese": "挠痒痒",
+      "phrase": "I tickle my baby sister and she laughs",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Spin chair",
+      "chinese": "转椅子",
+      "phrase": "Don't spin the chair too fast",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Style sb's hair",
+      "chinese": "做发型",
+      "phrase": "Mom styles my hair for school",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 17,
+      "word": "Tired",
+      "chinese": "累",
+      "phrase": "I feel tired after playing all day",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 18,
+      "word": "Stay up late",
+      "chinese": "熬夜",
+      "phrase": "I can stay up late when I grow up",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 18,
+      "word": "Grow up",
+      "chinese": "长大",
+      "phrase": "What do you want to be when you grow up",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 18,
+      "word": "Go to movies",
+      "chinese": "去看电影",
+      "phrase": "Let's go to the movies on Saturday",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 18,
+      "word": "Alone",
+      "chinese": "独自",
+      "phrase": "The cat likes to sit alone",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 18,
+      "word": "Go out",
+      "chinese": "出门",
+      "phrase": "We go out to play in the park",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 18,
+      "word": "At night",
+      "chinese": "在晚上",
+      "phrase": "The stars shine bright at night",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Friend",
+      "chinese": "朋友",
+      "phrase": "A tree can be your friend too",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Swing",
+      "chinese": "荡秋千",
+      "phrase": "I like to swing under the big tree",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Cry",
+      "chinese": "哭",
+      "phrase": "The baby starts to cry when he is hungry",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Climb",
+      "chinese": "爬",
+      "phrase": "I can climb the apple tree",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Think",
+      "chinese": "想",
+      "phrase": "I think this tree is very old",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Count",
+      "chinese": "数",
+      "phrase": "Let's count the leaves on the branch",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Rest",
+      "chinese": "休息",
+      "phrase": "I rest under the shady maple tree",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Maple tree",
+      "chinese": "枫树",
+      "phrase": "The maple tree has beautiful red leaves",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Apple tree",
+      "chinese": "苹果树",
+      "phrase": "We pick apples from the apple tree",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Weeping willow",
+      "chinese": "垂柳",
+      "phrase": "The weeping willow has long hanging branches",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Oak tree",
+      "chinese": "橡树",
+      "phrase": "The oak tree is strong and tall",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Birch tree",
+      "chinese": "桦树",
+      "phrase": "The birch tree has white bark",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 19,
+      "word": "Elm tree",
+      "chinese": "榆树",
+      "phrase": "The elm tree gives lots of shade",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Line leader",
+      "chinese": "领队",
+      "phrase": "The line leader walks at the front",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Paper collector",
+      "chinese": "收作业",
+      "phrase": "The paper collector gathers everyone's homework",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Paper passer",
+      "chinese": "发作业",
+      "phrase": "The paper passer hands out the worksheets",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Pass out",
+      "chinese": "分发",
+      "phrase": "Please pass out the crayons to everyone",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Collect",
+      "chinese": "收集",
+      "phrase": "I collect all the pencils after class",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Energy saver",
+      "chinese": "节能员",
+      "phrase": "The energy saver makes sure we turn off the lights",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 20,
+      "word": "Turn off lights",
+      "chinese": "关灯",
+      "phrase": "Please turn off the lights when you leave",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Stamped",
+      "chinese": "盖了章的",
+      "phrase": "The letter was stamped and ready to mail",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Smash",
+      "chinese": "砸碎",
+      "phrase": "Don't smash the box or it will break",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Wet",
+      "chinese": "湿的",
+      "phrase": "The box got wet in the rain",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Torn",
+      "chinese": "撕破的",
+      "phrase": "The torn box needs tape to fix it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Toss",
+      "chinese": "扔",
+      "phrase": "He gives the box a toss across the room",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Drop",
+      "chinese": "掉落",
+      "phrase": "Be careful not to drop the box",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Knock",
+      "chinese": "敲",
+      "phrase": "Knock on the box to see what's inside",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 21,
+      "word": "Van",
+      "chinese": "货车",
+      "phrase": "The delivery van brings packages to our house",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Lose",
+      "chinese": "丢失",
+      "phrase": "Don't lose your favorite toy",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Bad",
+      "chinese": "糟糕的",
+      "phrase": "I had a bad day when I fell down",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Terrible",
+      "chinese": "可怕的",
+      "phrase": "A terrible storm knocked down the tree",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Rotten",
+      "chinese": "腐烂的",
+      "phrase": "The rotten apple should go in the trash",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Miserable",
+      "chinese": "难受的",
+      "phrase": "I felt miserable when I was sick",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Horrible",
+      "chinese": "糟糕的",
+      "phrase": "A horrible noise woke me up",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Hug",
+      "chinese": "拥抱",
+      "phrase": "A warm hug makes me feel better",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Need",
+      "chinese": "需要",
+      "phrase": "Everyone needs a hug sometimes",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Move away",
+      "chinese": "搬走",
+      "phrase": "My best friend had to move away",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 22,
+      "word": "Have a good day",
+      "chinese": "祝你愉快",
+      "phrase": "Mom says have a good day every morning",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "I am lost",
+      "chinese": "我迷路了",
+      "phrase": "I was lost but then I found my mom",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Go outside",
+      "chinese": "出去",
+      "phrase": "Let's go outside and play",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Ask for help",
+      "chinese": "求助",
+      "phrase": "If you get lost, ask for help",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Stranger",
+      "chinese": "陌生人",
+      "phrase": "Never go with a stranger",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Nametag",
+      "chinese": "姓名牌",
+      "phrase": "My nametag has my name on it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Busy",
+      "chinese": "忙碌的",
+      "phrase": "Mom is busy cooking dinner",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Guard",
+      "chinese": "保安",
+      "phrase": "The security guard helps keep us safe",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Uniform",
+      "chinese": "制服",
+      "phrase": "The guard wears a blue uniform",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Call",
+      "chinese": "打电话",
+      "phrase": "Call for help if you need it",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Right",
+      "chinese": "对的",
+      "phrase": "Stay right where you are",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    },
+    {
+      "lessonId": 23,
+      "word": "Stay put",
+      "chinese": "留在原地",
+      "phrase": "If you are lost, stay put and wait",
+      "imageUrl": "",
+      "imageStatus": "pending",
+      "createdAt": "2026-05-17T05:23:38.724Z"
+    }
+  ],
+  "wordProgress": [],
+  "dailyLogs": [],
+  "dataVersion": 32
+}
