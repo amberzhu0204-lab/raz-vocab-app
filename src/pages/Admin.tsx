@@ -440,18 +440,47 @@ export default function Admin() {
               </div>
             </div>
 
-            {/* Quick Import from Claude */}
+            {/* Quick Import - Pre-loaded RAZ data */}
             <div className="bg-white rounded-2xl p-5 shadow-sm">
-              <h3 className="font-bold text-gray-800 mb-2">🤖 AI 辅助导入</h3>
+              <h3 className="font-bold text-gray-800 mb-2">🚀 一键导入 RAZ 单词数据</h3>
               <p className="text-sm text-gray-500 mb-3">
-                将 Claude 准备的单词数据（含中文、例句、图片）直接粘贴导入。格式为 JSON 数组。
+                导入预置的 RAZ 第22-35课单词（共12课 101个单词），包含中文释义、例句和 AI 配图。
               </p>
-              <button
-                onClick={handleImport}
-                className="w-full bg-kid-accent-3 text-white py-3 rounded-xl font-medium hover:opacity-90"
-              >
-                导入 JSON 文件
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={async () => {
+                    if (!confirm('将导入 12 课 101 个单词（含中文释义、例句、图片）。已存在的单词会更新。确定继续？')) return;
+                    try {
+                      const res = await fetch(import.meta.env.BASE_URL + 'raz-import-data.json');
+                      const data = await res.json();
+                      if (data.words) {
+                        await mergeImportWords(data.words);
+                        if (data.lessons) {
+                          for (const l of data.lessons) {
+                            const existing = await db.lessons.get(l.id);
+                            if (!existing) {
+                              await db.lessons.add(l);
+                            }
+                          }
+                        }
+                        alert('导入成功！请刷新页面查看。');
+                        window.location.reload();
+                      }
+                    } catch (e) {
+                      alert('导入失败：' + e);
+                    }
+                  }}
+                  className="flex-1 bg-kid-accent-3 text-white py-3 rounded-xl font-medium hover:opacity-90"
+                >
+                  📥 一键导入
+                </button>
+                <button
+                  onClick={handleImport}
+                  className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200"
+                >
+                  📁 手动导入
+                </button>
+              </div>
             </div>
 
             {/* Data stats */}
