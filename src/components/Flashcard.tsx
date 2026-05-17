@@ -49,13 +49,14 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
   useEffect(() => {
     setImgLoaded(false);
     setImgFailed(false);
-    // Local images load near-instantly, external may be slow/blocked
-    const timeout = isLocalImg ? 3000 : 6000;
-    const timer = setTimeout(() => {
-      // If still not loaded after timeout, skip and show emoji
-      setImgLoaded(l => { if (!l) setImgFailed(true); return l; });
-    }, timeout);
-    return () => clearTimeout(timer);
+    // Local images on same domain will always load — no timeout needed
+    // External images get a safety timeout
+    if (!isLocalImg) {
+      const timer = setTimeout(() => {
+        setImgLoaded(l => { if (!l) setImgFailed(true); return l; });
+      }, 10000);
+      return () => clearTimeout(timer);
+    }
   }, [word.id, isLocalImg]);
 
   const showImg = hasImage && !imgFailed;
@@ -101,7 +102,7 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
                   src={word.imageUrl}
                   alt={word.word}
                   className="w-full h-full object-cover"
-                  onLoad={() => setImgLoaded(true)}
+                  onLoad={() => { setImgLoaded(true); setImgFailed(false); }}
                   onError={() => setImgFailed(true)}
                 />
               </div>
