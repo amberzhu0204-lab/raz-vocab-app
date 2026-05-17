@@ -11,14 +11,16 @@ function searchUnsplash(word) {
     const html = execSync(cmd, { timeout: 12000, encoding: 'utf8', maxBuffer: 512 * 1024 });
     const match = html.match(/[+/]((?:premium_)?photo-[A-Za-z0-9_-]{10,})/);
     if (match) {
-      return `https://images.unsplash.com/${match[1]}?w=400&h=400&fit=crop`;
+      const host = match[1].startsWith('premium_') ? 'plus.unsplash.com' : 'images.unsplash.com';
+      return `https://${host}/${match[1]}?w=400&h=400&fit=crop`;
     }
   } catch (e) {
     // execSync may throw ENOBUFS but still capture partial stdout — try that too
     if (e.stdout) {
       const match = e.stdout.match(/[+/]((?:premium_)?photo-[A-Za-z0-9_-]{10,})/);
       if (match) {
-        return `https://images.unsplash.com/${match[1]}?w=400&h=400&fit=crop`;
+        const host = match[1].startsWith('premium_') ? 'plus.unsplash.com' : 'images.unsplash.com';
+        return `https://${host}/${match[1]}?w=400&h=400&fit=crop`;
       }
     }
   }
