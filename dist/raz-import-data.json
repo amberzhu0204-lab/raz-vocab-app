@@ -1,0 +1,1001 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "name": "RAZ 22: Five Seconds to Blast Off",
+      "description": "太空探索",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 4
+    },
+    {
+      "id": 2,
+      "name": "RAZ 23: Crazy Cakes (1)",
+      "description": "食物与食材",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 9
+    },
+    {
+      "id": 3,
+      "name": "RAZ 24: Crazy Cakes (2)",
+      "description": "创意蛋糕",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 7
+    },
+    {
+      "id": 4,
+      "name": "RAZ 25: Skateboards",
+      "description": "滑板运动",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 7
+    },
+    {
+      "id": 5,
+      "name": "RAZ 26: City Places",
+      "description": "城市建筑",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 7
+    },
+    {
+      "id": 6,
+      "name": "RAZ 27: Let's Make Lemonade",
+      "description": "制作柠檬水",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 9
+    },
+    {
+      "id": 7,
+      "name": "RAZ 29: Let's Carve a Pumpkin",
+      "description": "雕刻南瓜",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 9
+    },
+    {
+      "id": 8,
+      "name": "RAZ 31: Kaden's Kwanzaa",
+      "description": "宽扎节庆祝",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 6
+    },
+    {
+      "id": 9,
+      "name": "RAZ 32: The Leaning Tower",
+      "description": "比萨斜塔",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 13
+    },
+    {
+      "id": 10,
+      "name": "RAZ 33: Goodbye Snow",
+      "description": "清除积雪",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 10
+    },
+    {
+      "id": 11,
+      "name": "RAZ 34: Muddy Boots",
+      "description": "泥泞的靴子",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 15
+    },
+    {
+      "id": 12,
+      "name": "RAZ 35: Caring for Earth",
+      "description": "保护地球",
+      "createdAt": "2026-05-17T01:05:42.982Z",
+      "wordCount": 5
+    }
+  ],
+  "words": [
+    {
+      "lessonId": 1,
+      "word": "Blastoff",
+      "chinese": "发射升空",
+      "phrase": "The rocket is ready for blastoff",
+      "imageUrl": "https://image.pollinations.ai/prompt/cartoon%20rocket%20launching%20into%20space%2C%20colorful%20illustration%20for%20kids?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 1,
+      "word": "Crowd",
+      "chinese": "人群",
+      "phrase": "A big crowd watched the launch",
+      "imageUrl": "https://image.pollinations.ai/prompt/happy%20crowd%20of%20people%20watching%20event%2C%20kids%20illustration?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 1,
+      "word": "Control room",
+      "chinese": "控制室",
+      "phrase": "Scientists work in the control room",
+      "imageUrl": "https://image.pollinations.ai/prompt/space%20mission%20control%20room%20with%20computers%20and%20screens?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 1,
+      "word": "Space exploration",
+      "chinese": "太空探索",
+      "phrase": "Space exploration is exciting",
+      "imageUrl": "https://image.pollinations.ai/prompt/astronaut%20floating%20in%20space%20with%20planets%20and%20stars?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Dairy",
+      "chinese": "奶制品",
+      "phrase": "Milk and cheese are dairy foods",
+      "imageUrl": "https://image.pollinations.ai/prompt/milk%20cheese%20yogurt%20dairy%20products%2C%20kids%20food%20illustration?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Fried rice",
+      "chinese": "炒饭",
+      "phrase": "Mom made delicious fried rice",
+      "imageUrl": "https://image.pollinations.ai/prompt/fried%20rice%20with%20vegetables%20in%20a%20bowl%2C%20food%20photography?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Ground beef",
+      "chinese": "牛肉碎",
+      "phrase": "Ground beef is used to make burgers",
+      "imageUrl": "https://image.pollinations.ai/prompt/raw%20ground%20beef%20in%20a%20bowl%2C%20cooking%20ingredient?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Black bean",
+      "chinese": "黑豆",
+      "phrase": "Black beans are good for you",
+      "imageUrl": "https://image.pollinations.ai/prompt/black%20beans%20in%20a%20wooden%20bowl%2C%20healthy%20food?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Tofu",
+      "chinese": "豆腐",
+      "phrase": "Tofu is made from soybeans",
+      "imageUrl": "https://image.pollinations.ai/prompt/white%20tofu%20cubes%20on%20a%20plate%2C%20Asian%20food?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Burger",
+      "chinese": "汉堡",
+      "phrase": "I like burgers with cheese",
+      "imageUrl": "https://image.pollinations.ai/prompt/cheeseburger%20with%20lettuce%20and%20tomato%2C%20kids%20meal?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Peanut butter",
+      "chinese": "花生酱",
+      "phrase": "Peanut butter on toast is yummy",
+      "imageUrl": "https://image.pollinations.ai/prompt/peanut%20butter%20spread%20on%20bread%20toast?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "In different ways",
+      "chinese": "以不同的方式",
+      "phrase": "We cook food in different ways",
+      "imageUrl": "https://image.pollinations.ai/prompt/different%20cooking%20methods%20illustration%20for%20kids?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 2,
+      "word": "Food made from animals",
+      "chinese": "动物制成的食物",
+      "phrase": "Milk, eggs, and meat are food made from animals",
+      "imageUrl": "https://image.pollinations.ai/prompt/eggs%20milk%20and%20meat%20food%20products%20from%20farm%20animals?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "A giant rooster",
+      "chinese": "一只巨型公鸡",
+      "phrase": "The cake looked like a giant rooster",
+      "imageUrl": "https://image.pollinations.ai/prompt/colorful%20rooster%20chicken%2C%20farm%20animal%20illustration?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "A fancy crown",
+      "chinese": "一顶华丽王冠",
+      "phrase": "She wore a fancy crown on her head",
+      "imageUrl": "https://image.pollinations.ai/prompt/fancy%20golden%20crown%20with%20jewels%2C%20fairy%20tale?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Hook",
+      "chinese": "钩子",
+      "phrase": "The pirate had a hook for a hand",
+      "imageUrl": "https://image.pollinations.ai/prompt/metal%20hook%2C%20simple%20object%20illustration?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Beehive",
+      "chinese": "蜂巢",
+      "phrase": "Bees live in a beehive",
+      "imageUrl": "https://image.pollinations.ai/prompt/beehive%20hanging%20on%20a%20tree%20with%20honey%20bees?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Treasure chest",
+      "chinese": "宝箱",
+      "phrase": "Pirates found a treasure chest",
+      "imageUrl": "https://image.pollinations.ai/prompt/wooden%20treasure%20chest%20full%20of%20gold%20coins?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Magic",
+      "chinese": "魔法",
+      "phrase": "The magician did a magic trick",
+      "imageUrl": "https://image.pollinations.ai/prompt/magic%20wand%20with%20sparkles%20and%20stars%2C%20fantasy?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 3,
+      "word": "Unicorn",
+      "chinese": "独角兽",
+      "phrase": "The unicorn has a beautiful horn",
+      "imageUrl": "https://image.pollinations.ai/prompt/cute%20unicorn%20with%20rainbow%20horn%2C%20cartoon%20style%20for%20kids?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Board",
+      "chinese": "滑板",
+      "phrase": "He stood on the skateboard",
+      "imageUrl": "https://image.pollinations.ai/prompt/colorful%20skateboard%20on%20ramps%2C%20kids%20sport?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Wheels",
+      "chinese": "轮子",
+      "phrase": "The board has four wheels",
+      "imageUrl": "https://image.pollinations.ai/prompt/skateboard%20wheels%20close%20up%2C%20colorful?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Stand",
+      "chinese": "站立",
+      "phrase": "Stand on the board carefully",
+      "imageUrl": "https://image.pollinations.ai/prompt/child%20standing%20on%20a%20skateboard%2C%20learning?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Sit",
+      "chinese": "坐下",
+      "phrase": "You can also sit on the board",
+      "imageUrl": "https://image.pollinations.ai/prompt/child%20sitting%20on%20skateboard%2C%20park%20scene?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Stair",
+      "chinese": "楼梯",
+      "phrase": "He skated down the stairs",
+      "imageUrl": "https://image.pollinations.ai/prompt/outdoor%20stairs%20steps%2C%20urban%20architecture?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Contests",
+      "chinese": "比赛",
+      "phrase": "She won many skateboard contests",
+      "imageUrl": "https://image.pollinations.ai/prompt/skateboard%20competition%20contest%20with%20trophy?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 4,
+      "word": "Do tricks",
+      "chinese": "做技巧动作",
+      "phrase": "He can do cool tricks on his board",
+      "imageUrl": "https://image.pollinations.ai/prompt/skateboarder%20doing%20tricks%20ollie%20jump%2C%20action?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Find out",
+      "chinese": "发现",
+      "phrase": "Let us find out about the city",
+      "imageUrl": "https://image.pollinations.ai/prompt/child%20exploring%20and%20discovering%20new%20things?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Come",
+      "chinese": "来",
+      "phrase": "Come and see the tall buildings",
+      "imageUrl": "https://image.pollinations.ai/prompt/children%20walking%20together%20towards%20city%20buildings?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Skyscraper",
+      "chinese": "摩天大楼",
+      "phrase": "The skyscraper is very tall",
+      "imageUrl": "https://image.pollinations.ai/prompt/tall%20modern%20skyscraper%20building%20reaching%20the%20sky?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Stadium",
+      "chinese": "体育场",
+      "phrase": "People watch games at the stadium",
+      "imageUrl": "https://image.pollinations.ai/prompt/large%20sports%20stadium%20full%20of%20people%2C%20arena?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Parking garage",
+      "chinese": "停车场",
+      "phrase": "Cars park in the parking garage",
+      "imageUrl": "https://image.pollinations.ai/prompt/multi%20level%20parking%20garage%20building%20with%20cars?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Park cars",
+      "chinese": "停车",
+      "phrase": "People park cars in the garage",
+      "imageUrl": "https://image.pollinations.ai/prompt/cars%20parked%20neatly%20in%20a%20row%20in%20parking%20lot?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 5,
+      "word": "Work",
+      "chinese": "工作",
+      "phrase": "Many people work in the city",
+      "imageUrl": "https://image.pollinations.ai/prompt/people%20working%20in%20office%20buildings%2C%20city%20jobs?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Thirsty",
+      "chinese": "口渴的",
+      "phrase": "I am thirsty on a hot day",
+      "imageUrl": "https://image.pollinations.ai/prompt/child%20drinking%20water%20feeling%20thirsty%2C%20hot%20summer%20day?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Spot",
+      "chinese": "发现",
+      "phrase": "Spot the lemons on the tree",
+      "imageUrl": "https://image.pollinations.ai/prompt/lemons%20growing%20on%20a%20tree%2C%20bright%20yellow%20citrus?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Lemon seeds",
+      "chinese": "柠檬籽",
+      "phrase": "Take out the lemon seeds",
+      "imageUrl": "https://image.pollinations.ai/prompt/lemon%20seeds%20inside%20a%20cut%20lemon%2C%20close%20up?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Pick out",
+      "chinese": "挑出",
+      "phrase": "Pick out the seeds from the lemon",
+      "imageUrl": "https://image.pollinations.ai/prompt/hands%20picking%20seeds%20out%20of%20a%20lemon%20slice?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Stir",
+      "chinese": "搅拌",
+      "phrase": "Stir the lemonade with a spoon",
+      "imageUrl": "https://image.pollinations.ai/prompt/stirring%20liquid%20in%20a%20glass%20with%20a%20spoon?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Spoon",
+      "chinese": "勺子",
+      "phrase": "Use a spoon to mix it",
+      "imageUrl": "https://image.pollinations.ai/prompt/shiny%20metal%20spoon%2C%20simple%20kitchen%20utensil?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Pitcher",
+      "chinese": "水壶",
+      "phrase": "Pour the lemonade into a pitcher",
+      "imageUrl": "https://image.pollinations.ai/prompt/glass%20pitcher%20full%20of%20yellow%20lemonade?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Sticker",
+      "chinese": "贴纸",
+      "phrase": "Put a sticker on the cup",
+      "imageUrl": "https://image.pollinations.ai/prompt/colorful%20fun%20stickers%20for%20kids%2C%20decoration?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 6,
+      "word": "Spill",
+      "chinese": "洒出",
+      "phrase": "Be careful not to spill the drink",
+      "imageUrl": "https://image.pollinations.ai/prompt/liquid%20spilling%20from%20a%20cup%2C%20accident?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Adult",
+      "chinese": "成年人",
+      "phrase": "Ask an adult to help you",
+      "imageUrl": "https://image.pollinations.ai/prompt/parent%20and%20child%20together%2C%20family%20activity?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Carve",
+      "chinese": "雕刻",
+      "phrase": "Let's carve a pumpkin",
+      "imageUrl": "https://image.pollinations.ai/prompt/carving%20a%20pumpkin%20for%20Halloween%2C%20fun%20activity?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Cut out",
+      "chinese": "切出",
+      "phrase": "Cut out the top of the pumpkin",
+      "imageUrl": "https://image.pollinations.ai/prompt/cutting%20the%20top%20off%20a%20pumpkin%20with%20a%20knife?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Top",
+      "chinese": "顶部",
+      "phrase": "Remove the top of the pumpkin",
+      "imageUrl": "https://image.pollinations.ai/prompt/pumpkin%20top%20being%20removed%2C%20pumpkin%20carving?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Scoop out",
+      "chinese": "舀出",
+      "phrase": "Scoop out the seeds inside",
+      "imageUrl": "https://image.pollinations.ai/prompt/scooping%20pumpkin%20seeds%20and%20pulp%20out%20with%20hands?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Bake",
+      "chinese": "烘烤",
+      "phrase": "Bake the pumpkin seeds for a snack",
+      "imageUrl": "https://image.pollinations.ai/prompt/baking%20pumpkin%20seeds%20on%20a%20tray%20in%20oven?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Snack",
+      "chinese": "零食",
+      "phrase": "The seeds make a tasty snack",
+      "imageUrl": "https://image.pollinations.ai/prompt/healthy%20snack%20foods%20for%20kids%2C%20fruit%20and%20nuts?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Draw",
+      "chinese": "画",
+      "phrase": "Draw a face on the pumpkin",
+      "imageUrl": "https://image.pollinations.ai/prompt/drawing%20a%20funny%20face%20design%20on%20a%20pumpkin?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 7,
+      "word": "Inside",
+      "chinese": "里面",
+      "phrase": "Look inside the pumpkin",
+      "imageUrl": "https://image.pollinations.ai/prompt/looking%20inside%20a%20hollow%20carved%20pumpkin?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Celebrate",
+      "chinese": "庆祝",
+      "phrase": "We celebrate Kwanzaa with family",
+      "imageUrl": "https://image.pollinations.ai/prompt/family%20celebrating%20holiday%20together%2C%20festive?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Light candles",
+      "chinese": "点蜡烛",
+      "phrase": "We light candles each night",
+      "imageUrl": "https://image.pollinations.ai/prompt/lighting%20colorful%20candles%20in%20a%20kinara%20holder?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Share",
+      "chinese": "分享",
+      "phrase": "Share stories with your family",
+      "imageUrl": "https://image.pollinations.ai/prompt/children%20sharing%20toys%20and%20stories%20together?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Gift",
+      "chinese": "礼物",
+      "phrase": "Give a gift to someone you love",
+      "imageUrl": "https://image.pollinations.ai/prompt/colorful%20wrapped%20gift%20box%20with%20ribbon%20and%20bow?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Make crafts",
+      "chinese": "做手工",
+      "phrase": "Let's make crafts together",
+      "imageUrl": "https://image.pollinations.ai/prompt/children%20making%20arts%20and%20crafts%2C%20paper%20art?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 8,
+      "word": "Eat a feast",
+      "chinese": "吃大餐",
+      "phrase": "The family eats a feast together",
+      "imageUrl": "https://image.pollinations.ai/prompt/family%20eating%20a%20big%20dinner%20feast%20at%20table?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Build",
+      "chinese": "建造",
+      "phrase": "They wanted to build a tall tower",
+      "imageUrl": "https://image.pollinations.ai/prompt/construction%20workers%20building%20a%20tower?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.982Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Bell tower",
+      "chinese": "钟楼",
+      "phrase": "It was meant to be a bell tower",
+      "imageUrl": "https://image.pollinations.ai/prompt/tall%20bell%20tower%20with%20bells%20at%20the%20top?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Take many years",
+      "chinese": "花很多年",
+      "phrase": "It took many years to build",
+      "imageUrl": "https://image.pollinations.ai/prompt/calendar%20showing%20many%20years%20passing%2C%20time%20concept?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Right away",
+      "chinese": "立刻",
+      "phrase": "It did not lean right away",
+      "imageUrl": "https://image.pollinations.ai/prompt/clock%20showing%20right%20now%2C%20immediate%20time%20concept?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Start",
+      "chinese": "开始",
+      "phrase": "The tower started to lean slowly",
+      "imageUrl": "https://image.pollinations.ai/prompt/starting%20line%20race%20beginning%20concept?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Lean",
+      "chinese": "倾斜",
+      "phrase": "The tower began to lean",
+      "imageUrl": "https://image.pollinations.ai/prompt/the%20leaning%20tower%20of%20Pisa%20in%20Italy%2C%20tilt?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Soft ground",
+      "chinese": "松软地面",
+      "phrase": "It was built on soft ground",
+      "imageUrl": "https://image.pollinations.ai/prompt/soft%20muddy%20ground%20soil%2C%20nature%20texture?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Skinny",
+      "chinese": "细长的",
+      "phrase": "The tower looks tall and skinny",
+      "imageUrl": "https://image.pollinations.ai/prompt/tall%20thin%20pencil%2C%20skinny%20object%20comparison?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Dig",
+      "chinese": "挖掘",
+      "phrase": "They tried to dig and fix it",
+      "imageUrl": "https://image.pollinations.ai/prompt/digging%20in%20the%20ground%20with%20a%20shovel?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Stop",
+      "chinese": "停止",
+      "phrase": "They wanted to stop the leaning",
+      "imageUrl": "https://image.pollinations.ai/prompt/red%20stop%20sign%2C%20stopping%20action%20concept?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Rope",
+      "chinese": "绳子",
+      "phrase": "They used ropes to help hold it",
+      "imageUrl": "https://image.pollinations.ai/prompt/thick%20twisted%20rope%2C%20strong%20cord%20material?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Weight",
+      "chinese": "重量",
+      "phrase": "They added weight to balance it",
+      "imageUrl": "https://image.pollinations.ai/prompt/heavy%20weights%20dumbbells%2C%20balance%20concept?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 9,
+      "word": "Safe",
+      "chinese": "安全的",
+      "phrase": "Now the tower is safe",
+      "imageUrl": "https://image.pollinations.ai/prompt/safety%20shield%20checkmark%2C%20protected%20and%20secure?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Remove",
+      "chinese": "移除",
+      "phrase": "We need to remove the snow",
+      "imageUrl": "https://image.pollinations.ai/prompt/removing%20snow%20from%20a%20sidewalk%2C%20winter%20work?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Get in the way",
+      "chinese": "挡住路",
+      "phrase": "The snow gets in the way",
+      "imageUrl": "https://image.pollinations.ai/prompt/snow%20blocking%20a%20path%20road%2C%20obstacle?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Shovel",
+      "chinese": "铲子",
+      "phrase": "Use a shovel to move snow",
+      "imageUrl": "https://image.pollinations.ai/prompt/snow%20shovel%20tool%2C%20winter%20equipment?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Brush",
+      "chinese": "刷子",
+      "phrase": "Use a brush to clean the car",
+      "imageUrl": "https://image.pollinations.ai/prompt/brush%20cleaning%20snow%20off%20a%20car%20windshield?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snowblower",
+      "chinese": "吹雪机",
+      "phrase": "A snowblower clears snow fast",
+      "imageUrl": "https://image.pollinations.ai/prompt/snowblower%20machine%20clearing%20driveway%20snow?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snowplow",
+      "chinese": "铲雪车",
+      "phrase": "The snowplow clears the road",
+      "imageUrl": "https://image.pollinations.ai/prompt/big%20snowplow%20truck%20clearing%20a%20snowy%20road?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Salt",
+      "chinese": "盐",
+      "phrase": "Salt helps melt the ice",
+      "imageUrl": "https://image.pollinations.ai/prompt/salt%20being%20sprinkled%20on%20icy%20sidewalk?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snow melter",
+      "chinese": "融雪剂",
+      "phrase": "A snow melter turns snow to water",
+      "imageUrl": "https://image.pollinations.ai/prompt/snow%20melting%20into%20water%2C%20winter%20to%20spring?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Take away",
+      "chinese": "带走",
+      "phrase": "Trucks take away the snow",
+      "imageUrl": "https://image.pollinations.ai/prompt/dump%20truck%20carrying%20snow%20away%2C%20removal?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 10,
+      "word": "Snow dump",
+      "chinese": "堆雪场",
+      "phrase": "They bring snow to a snow dump",
+      "imageUrl": "https://image.pollinations.ai/prompt/big%20pile%20of%20plowed%20snow%2C%20snow%20mountain?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Kitchen",
+      "chinese": "厨房",
+      "phrase": "He walked into the kitchen",
+      "imageUrl": "https://image.pollinations.ai/prompt/bright%20clean%20kitchen%20room%20in%20a%20house?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Snack",
+      "chinese": "零食",
+      "phrase": "He wanted to get a snack",
+      "imageUrl": "https://image.pollinations.ai/prompt/tasty%20snacks%20crackers%20fruit%20on%20a%20plate?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Muddy tracks",
+      "chinese": "泥脚印",
+      "phrase": "His boots left muddy tracks",
+      "imageUrl": "https://image.pollinations.ai/prompt/muddy%20footprints%20on%20a%20clean%20floor%2C%20dirt%20trail?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Clean",
+      "chinese": "打扫",
+      "phrase": "Mom had to clean the floor",
+      "imageUrl": "https://image.pollinations.ai/prompt/person%20cleaning%20floor%20with%20mop%2C%20housework?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Floor",
+      "chinese": "地板",
+      "phrase": "The floor was covered in mud",
+      "imageUrl": "https://image.pollinations.ai/prompt/wooden%20floor%20surface%20in%20a%20house?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Notice",
+      "chinese": "注意到",
+      "phrase": "Mom noticed the muddy tracks",
+      "imageUrl": "https://image.pollinations.ai/prompt/person%20pointing%20and%20noticing%20something?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Living room",
+      "chinese": "客厅",
+      "phrase": "The tracks went to the living room",
+      "imageUrl": "https://image.pollinations.ai/prompt/cozy%20living%20room%20with%20sofa%20and%20furniture?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Mop",
+      "chinese": "拖把",
+      "phrase": "She used a mop to clean up",
+      "imageUrl": "https://image.pollinations.ai/prompt/cleaning%20mop%20and%20bucket%2C%20household%20tool?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Hallway",
+      "chinese": "走廊",
+      "phrase": "The mud was in the hallway too",
+      "imageUrl": "https://image.pollinations.ai/prompt/long%20hallway%20corridor%20in%20a%20house?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Front door",
+      "chinese": "前门",
+      "phrase": "He came in through the front door",
+      "imageUrl": "https://image.pollinations.ai/prompt/front%20door%20entrance%20of%20a%20house?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Behind",
+      "chinese": "后面",
+      "phrase": "Look behind the door",
+      "imageUrl": "https://image.pollinations.ai/prompt/hiding%20behind%20a%20door%2C%20position%20concept%20for%20kids?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Mess",
+      "chinese": "混乱",
+      "phrase": "What a big mess!",
+      "imageUrl": "https://image.pollinations.ai/prompt/big%20messy%20room%20with%20toys%20and%20mud%2C%20chaos?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Look at",
+      "chinese": "看着",
+      "phrase": "Look at your muddy boots!",
+      "imageUrl": "https://image.pollinations.ai/prompt/child%20looking%20down%20at%20something%2C%20attention?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Boots",
+      "chinese": "靴子",
+      "phrase": "Take off your boots please",
+      "imageUrl": "https://image.pollinations.ai/prompt/muddy%20rain%20boots%2C%20rubber%20boots%20footwear?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 11,
+      "word": "Shake head",
+      "chinese": "摇头",
+      "phrase": "Mom just shook her head",
+      "imageUrl": "https://image.pollinations.ai/prompt/person%20shaking%20head%20saying%20no%2C%20gesture?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Tend gardens",
+      "chinese": "照料花园",
+      "phrase": "We tend gardens to grow plants",
+      "imageUrl": "https://image.pollinations.ai/prompt/person%20tending%20a%20garden%2C%20watering%20plants%20flowers?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Reuse",
+      "chinese": "再利用",
+      "phrase": "Reuse your water bottle",
+      "imageUrl": "https://image.pollinations.ai/prompt/reusable%20water%20bottle%20being%20refilled%2C%20eco%20friendly?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Recycle",
+      "chinese": "回收",
+      "phrase": "Recycle paper and plastic",
+      "imageUrl": "https://image.pollinations.ai/prompt/recycling%20bins%20blue%20green%20with%20recycle%20symbol?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Save water",
+      "chinese": "节约用水",
+      "phrase": "Turn off the tap to save water",
+      "imageUrl": "https://image.pollinations.ai/prompt/turning%20off%20water%20faucet%20tap%2C%20water%20conservation?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    },
+    {
+      "lessonId": 12,
+      "word": "Electricity",
+      "chinese": "电",
+      "phrase": "Turn off lights to save electricity",
+      "imageUrl": "https://image.pollinations.ai/prompt/light%20bulb%20glowing%2C%20save%20energy%20electricity?width=400&height=400&nofeed=true&safe=true",
+      "imageStatus": "ready",
+      "createdAt": "2026-05-17T01:05:42.983Z"
+    }
+  ],
+  "wordProgress": [],
+  "dailyLogs": []
+}
