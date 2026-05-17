@@ -2,6 +2,33 @@ import { useState, useEffect } from 'react';
 import type { Word } from '../types';
 import { getCardColor } from '../utils/colors';
 
+const WORD_EMOJI: Record<string, string> = {
+  'Blastoff': '🚀', 'Crowd': '👥', 'Control room': '🖥️', 'Space exploration': '🛸',
+  'Dairy': '🥛', 'Fried rice': '🍚', 'Ground beef': '🥩', 'Black bean': '🫘',
+  'Tofu': '🧈', 'Burger': '🍔', 'Peanut butter': '🥜', 'In different ways': '🔄',
+  'Food made from animals': '🐄', 'A giant rooster': '🐓', 'A fancy crown': '👑',
+  'Hook': '🪝', 'Beehive': '🐝', 'Treasure chest': '💎', 'Magic': '✨', 'Unicorn': '🦄',
+  'Board': '🛹', 'Wheels': '🛞', 'Stand': '🧍', 'Sit': '🪑', 'Stair': '🪜',
+  'Contests': '🏆', 'Do tricks': '🤸', 'Find out': '🔍', 'Come': '👋',
+  'Skyscraper': '🏙️', 'Stadium': '🏟️', 'Parking garage': '🅿️', 'Park cars': '🚗',
+  'Work': '💼', 'Thirsty': '🥤', 'Spot': '👀', 'Lemon seeds': '🍋',
+  'Pick out': '🤏', 'Stir': '🥄', 'Spoon': '🥄', 'Pitcher': '🫗', 'Sticker': '⭐',
+  'Spill': '💧', 'Adult': '👨', 'Carve': '🔪', 'Cut out': '✂️', 'Top': '🔝',
+  'Scoop out': '🥄', 'Bake': '🔥', 'Snack': '🍪', 'Draw': '✏️', 'Inside': '🔍',
+  'Celebrate': '🎉', 'Light candles': '🕯️', 'Share': '🤝', 'Gift': '🎁',
+  'Make crafts': '🎨', 'Eat a feast': '🍽️', 'Build': '🏗️', 'Bell tower': '🔔',
+  'Take many years': '📅', 'Right away': '⚡', 'Start': '▶️', 'Lean': '📐',
+  'Soft ground': '🌱', 'Skinny': '📏', 'Dig': '⛏️', 'Stop': '🛑', 'Rope': '🪢',
+  'Weight': '⚖️', 'Safe': '🛡️', 'Remove': '🧹', 'Get in the way': '🚧',
+  'Shovel': '🪣', 'Brush': '🧹', 'Snowblower': '❄️', 'Snowplow': '🚛',
+  'Salt': '🧂', 'Snow melter': '💧', 'Take away': '🗑️', 'Snow dump': '🏔️',
+  'Kitchen': '🍳', 'Muddy tracks': '👣', 'Clean': '🧼', 'Floor': '🏠',
+  'Notice': '👀', 'Living room': '🛋️', 'Mop': '🧹', 'Hallway': '🚪',
+  'Front door': '🚪', 'Behind': '🙈', 'Mess': '💥', 'Look at': '👁️',
+  'Boots': '👢', 'Shake head': '🙅', 'Tend gardens': '🌻', 'Reuse': '♻️',
+  'Recycle': '♻️', 'Save water': '💧', 'Electricity': '⚡',
+};
+
 interface FlashcardProps {
   word: Word;
   index: number;
@@ -21,6 +48,11 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
   useEffect(() => {
     setImgLoading(true);
     setImgError(false);
+    // Timeout: if image doesn't load within 8 seconds, show fallback
+    const timer = setTimeout(() => {
+      setImgLoading(prev => { if (prev) setImgError(true); return prev; });
+    }, 8000);
+    return () => clearTimeout(timer);
   }, [word.id]);
 
   const showImg = hasImage && !imgError;
@@ -69,8 +101,9 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
               />
             </div>
           ) : (
-            <div className={`w-40 h-40 rounded-full ${cardColor} flex items-center justify-center mb-4 border-4 border-white/50`}>
-              <span className="text-5xl font-bold text-gray-700">
+            <div className={`w-40 h-40 rounded-full ${cardColor} flex flex-col items-center justify-center mb-4 border-4 border-white/50 gap-1`}>
+              <span className="text-5xl">{WORD_EMOJI[word.word] || ''}</span>
+              <span className="text-4xl font-bold text-gray-700">
                 {word.word.charAt(0).toUpperCase()}
               </span>
             </div>
