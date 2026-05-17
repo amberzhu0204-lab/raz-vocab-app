@@ -1,0 +1,22 @@
+{
+  "name": "RAZ 单词复习",
+  "short_name": "RAZ复习",
+  "description": "帮助孩子复习 RAZ 英语单词的交互式学习工具",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF7ED",
+  "theme_color": "#4F46E5",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
