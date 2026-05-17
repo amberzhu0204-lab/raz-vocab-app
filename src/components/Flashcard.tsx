@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Word } from '../types';
 import { getCardColor } from '../utils/colors';
 
@@ -15,6 +15,15 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
 
   const hasImage = showImage && word.imageUrl && word.imageStatus === 'ready';
   const cardColor = getCardColor(index);
+  const [imgLoading, setImgLoading] = useState(true);
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgLoading(true);
+    setImgError(false);
+  }, [word.id]);
+
+  const showImg = hasImage && !imgError;
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -44,13 +53,21 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
       <div className="flashcard-inner relative w-full h-full">
         {/* Front */}
         <div className={`flashcard-front absolute inset-0 rounded-3xl ${cardColor} flex flex-col items-center justify-center p-6`}>
-          {hasImage ? (
-            <img
-              src={word.imageUrl}
-              alt={word.word}
-              className="w-full h-48 object-cover rounded-2xl mb-4"
-              loading="lazy"
-            />
+          {showImg ? (
+            <div className="w-full h-48 rounded-2xl mb-4 overflow-hidden relative bg-white/30">
+              {imgLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-spin w-8 h-8 border-3 border-kid-primary border-t-transparent rounded-full" />
+                </div>
+              )}
+              <img
+                src={word.imageUrl}
+                alt={word.word}
+                className="w-full h-full object-cover"
+                onLoad={() => setImgLoading(false)}
+                onError={() => { setImgError(true); setImgLoading(false); }}
+              />
+            </div>
           ) : (
             <div className={`w-40 h-40 rounded-full ${cardColor} flex items-center justify-center mb-4 border-4 border-white/50`}>
               <span className="text-5xl font-bold text-gray-700">
