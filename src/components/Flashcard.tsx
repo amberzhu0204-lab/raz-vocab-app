@@ -40,22 +40,25 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
   const [flipped, setFlipped] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
+  const isLocalImg = word.imageUrl?.startsWith('images/');
   const hasImage = showImage && word.imageUrl && word.imageStatus === 'ready';
   const cardColor = getCardColor(index);
-  const [imgLoading, setImgLoading] = useState(true);
-  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
-    setImgLoading(true);
-    setImgError(false);
-    // Timeout: if image doesn't load within 8 seconds, show fallback
+    setImgLoaded(false);
+    setImgFailed(false);
+    // Local images load near-instantly, external may be slow/blocked
+    const timeout = isLocalImg ? 3000 : 6000;
     const timer = setTimeout(() => {
-      setImgLoading(prev => { if (prev) setImgError(true); return prev; });
-    }, 8000);
+      // If still not loaded after timeout, skip and show emoji
+      setImgLoaded(l => { if (!l) setImgFailed(true); return l; });
+    }, timeout);
     return () => clearTimeout(timer);
-  }, [word.id]);
+  }, [word.id, isLocalImg]);
 
-  const showImg = hasImage && !imgError;
+  const showImg = hasImage && !imgFailed;
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -86,23 +89,26 @@ export default function Flashcard({ word, index, showImage, onSwipe }: Flashcard
         {/* Front */}
         <div className={`flashcard-front absolute inset-0 rounded-3xl ${cardColor} flex flex-col items-center justify-center p-6`}>
           {showImg ? (
-            <div className="w-full h-48 rounded-2xl mb-4 overflow-hidden relative bg-white/30">
-              {imgLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-spin w-8 h-8 border-3 border-kid-primary border-t-transparent rounded-full" />
-                </div>
-              )}
-              <img
-                src={word.imageUrl}
-                alt={word.word}
-                className="w-full h-full object-cover"
-                onLoad={() => setImgLoading(false)}
-                onError={() => { setImgError(true); setImgLoading(false); }}
-              />
-            </div>
+            <>
+              {/* Emoji placeholder — always shown, hidden when image loads */}
+              <div className={`w-full h-48 rounded-2xl mb-4 flex flex-col items-center justify-center ${cardColor} border-4 border-white/40 gap-1 ${imgLoaded ? 'hidden' : ''}`}>
+                <span className="text-6xl">{WORD_EMOJI[word.word] || '📖'}</span>
+                <span className="text-3xl font-bold text-gray-600">{word.word.charAt(0).toUpperCase()}</span>
+              </div>
+              {/* Actual image — shown only when loaded */}
+              <div className={`w-full h-48 rounded-2xl mb-4 overflow-hidden ${imgLoaded ? '' : 'hidden'}`}>
+                <img
+                  src={word.imageUrl}
+                  alt={word.word}
+                  className="w-full h-full object-cover"
+                  onLoad={() => setImgLoaded(true)}
+                  onError={() => setImgFailed(true)}
+                />
+              </div>
+            </>
           ) : (
             <div className={`w-40 h-40 rounded-full ${cardColor} flex flex-col items-center justify-center mb-4 border-4 border-white/50 gap-1`}>
-              <span className="text-5xl">{WORD_EMOJI[word.word] || ''}</span>
+              <span className="text-5xl">{WORD_EMOJI[word.word] || '📖'}</span>
               <span className="text-4xl font-bold text-gray-700">
                 {word.word.charAt(0).toUpperCase()}
               </span>
