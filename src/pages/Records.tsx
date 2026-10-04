@@ -8,11 +8,12 @@ import {
   MASTERY_LEVELS, MASTERY_LABELS, MASTERY_BAR_COLORS, MASTERED_LEVEL, OUTCOME_LABELS,
 } from '../types';
 import { formatDateCN } from '../utils/date';
+import { shortLessonLabel } from '../utils/catalog';
 import type { ReviewLog, ReadingLog, Word, Lesson } from '../types';
 
 interface DayGroup {
   date: string;
-  books: { name: string; lessonId: number }[];
+  books: { name: string; lessonId: number; bookNumber?: number }[];
   reviewed: number;
   correct: number;
 }
@@ -64,15 +65,20 @@ export default function Records() {
   };
   for (const r of readingLogs) {
     const day = ensureDay(r.date);
-    const name = lessonMap[r.lessonId]?.name;
+    const lesson = lessonMap[r.lessonId];
+    const name = lesson && shortLessonLabel(lesson);
     if (name && !day.books.some(b => b.lessonId === r.lessonId)) {
-      day.books.push({ name, lessonId: r.lessonId });
+      day.books.push({ name, lessonId: r.lessonId, bookNumber: lesson?.bookNumber });
     }
   }
   for (const l of reviewLogs) {
     const day = ensureDay(l.date);
     day.reviewed += 1;
     if (l.result === 'correct') day.correct += 1;
+  }
+  // 同一天里按册号从小到大排
+  for (const day of dayMap.values()) {
+    day.books.sort((a, b) => (a.bookNumber || 0) - (b.bookNumber || 0));
   }
   const days = [...dayMap.values()].sort((a, b) => b.date.localeCompare(a.date));
 
@@ -202,7 +208,7 @@ export default function Records() {
                       {wordMap[r.wordId]?.word || '(已删除)'}
                     </p>
                     <p className="text-xs text-gray-400 truncate">
-                      {lessonMap[r.lessonId]?.name || ''}
+                      {lessonMap[r.lessonId] ? shortLessonLabel(lessonMap[r.lessonId]) : ''}
                     </p>
                   </div>
                   <div className="text-right shrink-0 ml-2">

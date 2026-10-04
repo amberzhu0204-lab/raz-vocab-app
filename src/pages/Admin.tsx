@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useLessons } from '../hooks/useLessons';
 import { useWords } from '../hooks/useWords';
-import { exportAllData, mergeImportWords, bulkAddWords, db } from '../db/database';
+import { exportAllData, mergeImportWords, bulkAddWords, db, resetAllContent } from '../db/database';
 import { todayISO } from '../utils/date';
+import { loadCatalog } from '../utils/catalog';
 import LessonForm from '../components/LessonForm';
 import WordForm from '../components/WordForm';
 import ImagePicker from '../components/ImagePicker';
-import type { Lesson, Word } from '../types';
+import type { Lesson, Word, CatalogLevel } from '../types';
 import { unsplashService } from '../services/unsplash';
 
 type Tab = 'lessons' | 'words' | 'settings';
@@ -19,6 +20,7 @@ export default function Admin() {
   const [showWordForm, setShowWordForm] = useState(false);
   const [selectedLessonId, setSelectedLessonId] = useState<number | null>(null);
   const [allWords, setAllWords] = useState<Word[]>([]);
+  const [catalog, setCatalog] = useState<CatalogLevel[]>([]);
   const [unsplashKey, setUnsplashKey] = useState('');
   const [pickingImageFor, setPickingImageFor] = useState<Word | null>(null);
 
@@ -51,6 +53,8 @@ export default function Admin() {
     };
     load();
   }, [words, lessons]);
+
+  useEffect(() => { loadCatalog().then(setCatalog); }, []);
 
   const handleExport = async () => {
     const json = await exportAllData();
@@ -446,46 +450,24 @@ export default function Admin() {
               </div>
             </div>
 
-            {/* Quick Import - Pre-loaded RAZ data */}
+            {/* 预置书目 */}
             <div className="bg-white rounded-2xl p-5 shadow-sm">
-              <h3 className="font-bold text-gray-800 mb-2">🚀 一键导入 RAZ 单词数据</h3>
+              <h3 className="font-bold text-gray-800 mb-2">📚 预置书目</h3>
               <p className="text-sm text-gray-500 mb-3">
-                导入预置的 RAZ 第22-35课单词（共12课 101个单词），包含中文释义、例句和 AI 配图。
+                每天记阅读时直接从书目里挑「第几本」。书目内容在
+                <code className="text-xs bg-gray-100 px-1 rounded mx-1">public/raz-books.json</code>
+                ，换版本重新部署即可。
               </p>
-              <div className="flex gap-2">
-                <button
-                  onClick={async () => {
-                    if (!confirm('将导入 12 课 101 个单词（含中文释义、例句、图片）。已存在的单词会更新。确定继续？')) return;
-                    try {
-                      const res = await fetch(import.meta.env.BASE_URL + 'raz-import-data.json');
-                      const data = await res.json();
-                      if (data.words) {
-                        await mergeImportWords(data.words);
-                        if (data.lessons) {
-                          for (const l of data.lessons) {
-                            const existing = await db.lessons.get(l.id);
-                            if (!existing) {
-                              await db.lessons.add(l);
-                            }
-                          }
-                        }
-                        alert('导入成功！请刷新页面查看。');
-                        window.location.reload();
-                      }
-                    } catch (e) {
-                      alert('导入失败：' + e);
-                    }
-                  }}
-                  className="flex-1 bg-kid-accent-3 text-white py-3 rounded-xl font-medium hover:opacity-90"
-                >
-                  📥 一键导入
-                </button>
-                <button
-                  onClick={handleImport}
-                  className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200"
-                >
-                  📁 手动导入
-                </button>
+              <div className="text-sm text-gray-500 space-y-1">
+                {catalog.length === 0 ? (
+                  <p className="text-gray-400">书目还没加载</p>
+                ) : (
+                  catalog.map(lv => (
+                    <p key={lv.level}>
+                      RAZ {lv.level} 级：{lv.books.length} 本
+                    </p>
+                  ))
+                )}
               </div>
             </div>
 
@@ -493,7 +475,7 @@ export default function Admin() {
             <div className="bg-white rounded-2xl p-5 shadow-sm">
               <h3 className="font-bold text-gray-800 mb-2">📊 数据统计</h3>
               <div className="text-sm text-gray-500 space-y-1">
-                <p>课程数: {lessons.length}</p>
+                <p>已记录的书: {lessons.length} 本</p>
                 <p>总单词数: {allWords.length}</p>
               </div>
             </div>
@@ -515,6 +497,25 @@ export default function Admin() {
                   导入数据
                 </button>
               </div>
+            </div>
+
+            {/* 清空 */}
+            <div className="bg-white rounded-2xl p-5 shadow-sm">
+              <h3 className="font-bold text-gray-800 mb-2">🗑 清空所有记录</h3>
+              <p className="text-sm text-gray-500 mb-3">
+                删除全部「读过的书、生词、复习进度和记录」。书目不受影响，清完可以从头再录。
+              </p>
+              <button
+                onClick={async () => {
+                  if (!confirm('会删掉全部课程、生词、复习进度和历史记录，确定吗？')) return;
+                  if (!confirm('删掉就找不回来了。建议先「导出数据」备份。真的要清空吗？')) return;
+                  await resetAllContent();
+                  window.location.reload();
+                }}
+                className="w-full border border-red-200 text-red-500 py-3 rounded-xl font-medium hover:bg-red-50"
+              >
+                清空所有记录
+              </button>
             </div>
           </div>
         )}

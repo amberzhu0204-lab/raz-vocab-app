@@ -2,6 +2,7 @@ import Dexie, { type Table } from 'dexie';
 import type {
   Lesson, Word, WordProgress, DailyLog, ReadingLog, ReviewLog, ReviewOutcome,
 } from '../types';
+import { bookDisplayName } from '../utils/catalog';
 
 export class RazVocabDB extends Dexie {
   lessons!: Table<Lesson, number>;
@@ -49,6 +50,65 @@ export async function addLesson(lesson: Omit<Lesson, 'id' | 'createdAt' | 'wordC
 
 export async function updateLesson(id: number, data: Partial<Lesson>): Promise<number> {
   return db.lessons.update(id, data);
+}
+
+/**
+ * 从预置书目里挑一本书：已经有课就用它，没有就按书目建一条。
+ * 家长每天只需要「选第几本」，不用再手打书名。
+ */
+export async function findOrCreateLessonByBook(params: {
+  level: string;
+  bookNumber: number;
+  title: string;
+  description?: string;
+}): Promise<Lesson> {
+  const existing = (await db.lessons.toArray()).find(
+    l => l.level === params.level && l.bookNumber === params.bookNumber
+  );
+  if (existing) return existing;
+
+  const id = await db.lessons.add({
+    name: bookDisplayName(params.level, params.bookNumber, params.title),
+    description: params.description || '',
+    level: params.level,
+    bookNumber: params.bookNumber,
+    title: params.title,
+    createdAt: new Date(),
+    wordCount: 0,
+  });
+  return (await db.lessons.get(id))!;
+}
+
+/** 书目里没有的书：按书名找，找不到就建一条没有级别的新课 */
+export async function findOrCreateLessonByName(name: string): Promise<Lesson> {
+  const trimmed = name.trim();
+  const existing = (await db.lessons.toArray()).find(l => l.name === trimmed);
+  if (existing) return existing;
+  const id = await db.lessons.add({
+    name: trimmed,
+    description: '',
+    createdAt: new Date(),
+    wordCount: 0,
+  });
+  return (await db.lessons.get(id))!;
+}
+
+/** 清空全部内容（课程 / 单词 / 进度 / 各种日志）。书目是预置的，不受影响。 */
+export async function resetAllContent(): Promise<void> {
+  await db.transaction(
+    'rw',
+    [db.lessons, db.words, db.wordProgress, db.dailyLogs, db.readingLogs, db.reviewLogs],
+    async () => {
+      await Promise.all([
+        db.lessons.clear(),
+        db.words.clear(),
+        db.wordProgress.clear(),
+        db.dailyLogs.clear(),
+        db.readingLogs.clear(),
+        db.reviewLogs.clear(),
+      ]);
+    }
+  );
 }
 
 export async function deleteLesson(id: number): Promise<void> {

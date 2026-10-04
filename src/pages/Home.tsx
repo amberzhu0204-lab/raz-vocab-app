@@ -5,12 +5,15 @@ import {
 } from '../db/database';
 import StatsCard from '../components/StatsCard';
 import { todayISO, formatDateCN } from '../utils/date';
+import { formatLessonName, formatLessonTitle } from '../utils/catalog';
 import type { Lesson } from '../types';
 
 export default function Home() {
   const [stats, setStats] = useState({ totalLessons: 0, totalWords: 0, masteredWords: 0, reviewedWords: 0 });
   const [dueCount, setDueCount] = useState(0);
-  const [todayBooks, setTodayBooks] = useState<{ name: string; wordCount: number; lessonId: number }[]>([]);
+  const [todayBooks, setTodayBooks] = useState<
+    { label: string; title: string; wordCount: number; lessonId: number }[]
+  >([]);
   const [todayReviewed, setTodayReviewed] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -30,11 +33,16 @@ export default function Home() {
       setDueCount(due.length);
       setTodayReviewed(reviewLogs.length);
 
-      const books: { name: string; wordCount: number; lessonId: number }[] = [];
+      const books: { label: string; title: string; wordCount: number; lessonId: number }[] = [];
       for (const log of logs) {
         const lesson: Lesson | undefined = await getLesson(log.lessonId);
         if (lesson) {
-          books.push({ name: lesson.name, wordCount: lesson.wordCount, lessonId: lesson.id! });
+          books.push({
+            label: formatLessonName(lesson),
+            title: formatLessonTitle(lesson),
+            wordCount: lesson.wordCount,
+            lessonId: lesson.id!,
+          });
         }
       }
       setTodayBooks(books);
@@ -99,8 +107,13 @@ export default function Home() {
                   onClick={() => navigate(`/lesson/${b.lessonId}/review`)}
                   className="w-full flex items-center justify-between bg-indigo-50 rounded-xl px-4 py-3 text-left active:scale-[0.98] transition-transform"
                 >
-                  <span className="font-medium text-gray-800 text-sm truncate mr-2">{b.name}</span>
-                  <span className="text-xs text-gray-500 shrink-0">{b.wordCount} 个词</span>
+                  <span className="min-w-0 mr-2">
+                    <span className="font-medium text-gray-800 text-sm block truncate">{b.label}</span>
+                    {b.title && <span className="text-xs text-gray-500 block truncate">{b.title}</span>}
+                  </span>
+                  <span className="text-xs text-gray-500 shrink-0">
+                    {b.wordCount > 0 ? `${b.wordCount} 个词` : '无生词'}
+                  </span>
                 </button>
               ))}
             </div>

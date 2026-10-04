@@ -9,54 +9,45 @@ import Admin from './pages/Admin';
 import Records from './pages/Records';
 import Today from './pages/Today';
 import GlobalReview from './pages/GlobalReview';
-import { db, mergeImportWords } from './db/database';
+import { resetAllContent } from './db/database';
+import { loadCatalog } from './utils/catalog';
 
-const STORAGE_KEY = 'raz-data-version';
+const GENERATION_KEY = 'raz-data-generation';
+/** 改成 2：老数据没有系列/册号，一次性清空重新录 */
+const CURRENT_GENERATION = 2;
 
 /**
- * 导入在一次会话里只跑一次。
- * React StrictMode 在开发模式下会把 effect 跑两遍，两个并发导入会撞课程主键
- * （ConstraintError: Key already exists），所以用单例 Promise 兜住。
+ * 启动只跑一次。React StrictMode 在开发模式下会把 effect 跑两遍，
+ * 用单例 Promise 兜住，避免并发清库。
  */
-let importOnce: Promise<void> | null = null;
+let bootOnce: Promise<void> | null = null;
 
-function runImportOnce(onStatus?: (s: string) => void): Promise<void> {
-  if (!importOnce) importOnce = doImport(onStatus);
-  return importOnce;
+function runBootOnce(onStatus?: (s: string) => void): Promise<void> {
+  if (!bootOnce) bootOnce = doBoot(onStatus);
+  return bootOnce;
 }
 
-async function doImport(onStatus?: (s: string) => void): Promise<void> {
+async function doBoot(onStatus?: (s: string) => void): Promise<void> {
   try {
-    const res = await fetch(import.meta.env.BASE_URL + 'raz-import-data.json?v=2');
-    if (!res.ok) return;
-    const data = await res.json();
-    if (!data.lessons || !data.words) return;
-
-    const storedVersion = localStorage.getItem(STORAGE_KEY);
-    const needsImport = !storedVersion || Number(storedVersion) < (data.dataVersion || 0);
-    if (!needsImport) return;
-
-    onStatus?.('正在更新数据...');
-    // 合并课程：已存在的跳过
-    for (const l of data.lessons) {
-      const existing = await db.lessons.get(l.id);
-      if (!existing) await db.lessons.put(l);
+    const stored = Number(localStorage.getItem(GENERATION_KEY) || 0);
+    if (stored < CURRENT_GENERATION) {
+      onStatus?.('正在整理数据...');
+      await resetAllContent();
+      localStorage.setItem(GENERATION_KEY, String(CURRENT_GENERATION));
+      localStorage.removeItem('raz-data-version');
     }
-    // 单词总是合并更新，保留学习进度
-    await mergeImportWords(data.words);
-    localStorage.setItem(STORAGE_KEY, String(data.dataVersion || 0));
-    onStatus?.('更新完成！');
+    await loadCatalog();
   } catch (e) {
-    console.warn('Auto import failed:', (e as Error)?.message || e);
+    console.warn('Boot failed:', (e as Error)?.message || e);
   }
 }
 
-function AutoImport({ children }: { children: React.ReactNode }) {
+function Bootstrap({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    runImportOnce(setStatus).finally(() => setReady(true));
+    runBootOnce(setStatus).finally(() => setReady(true));
   }, []);
 
   if (!ready) {
@@ -76,7 +67,7 @@ function AutoImport({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <HashRouter>
-      <AutoImport>
+      <Bootstrap>
         <div className="h-full flex flex-col">
           <main className="flex-1 overflow-hidden">
             <Routes>
@@ -92,7 +83,7 @@ export default function App() {
           </main>
           <Navigation />
         </div>
-      </AutoImport>
+      </Bootstrap>
     </HashRouter>
   );
 }

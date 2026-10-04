@@ -4,6 +4,24 @@ export interface Lesson {
   description: string;
   createdAt: Date;
   wordCount: number;
+  /** RAZ 系列级别：'aa' / 'A' … 'Z'。老数据没有这个字段 */
+  level?: string;
+  /** 该系列里的第几本，从 1 开始 */
+  bookNumber?: number;
+  /** 纯书名，不含编号前缀 */
+  title?: string;
+}
+
+/** 预置书目里的一本（来自 public/raz-books.json，只读） */
+export interface CatalogBook {
+  n: number;
+  title: string;
+  text?: string;
+}
+
+export interface CatalogLevel {
+  level: string;
+  books: CatalogBook[];
 }
 
 export interface Word {

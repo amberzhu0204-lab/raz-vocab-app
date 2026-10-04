@@ -1,13 +1,14 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLessons } from '../hooks/useLessons';
 import {
   getReadingLogsByDate, addReadingLog, getWordsByLesson, addWord, updateWord,
-  seedInitialProgress, getLesson, addLesson,
+  seedInitialProgress, getLesson, findOrCreateLessonByBook, findOrCreateLessonByName,
 } from '../db/database';
+import { loadCatalog } from '../utils/catalog';
 import { initialReviewDate } from '../utils/spaced-repetition';
 import { todayISO, formatDateCN } from '../utils/date';
-import type { ReadingLog, Lesson, Word } from '../types';
+import type { ReadingLog, Lesson, CatalogLevel } from '../types';
 
 interface Row {
   word: string;
@@ -17,11 +18,18 @@ interface Row {
 
 const emptyRow = (): Row => ({ word: '', chinese: '', example: '' });
 
+/** 今天选中的一本书 + 这本书要录的生词 */
+interface PickedBook {
+  level: string;
+  n: number;
+  title: string;
+  rows: Row[];
+}
+
 interface SavedInfo {
-  lessonId: number;
-  lessonName: string;
-  added: number;
-  merged: number;
+  books: { lessonId: number; label: string; added: number; merged: number }[];
+  totalAdded: number;
+  totalMerged: number;
 }
 
 export default function Today() {
@@ -29,24 +37,23 @@ export default function Today() {
   const navigate = useNavigate();
 
   const [date, setDate] = useState(todayISO());
-  const [bookMode, setBookMode] = useState<'existing' | 'new'>('existing');
-  const [lessonId, setLessonId] = useState<number>(0);
-  const [newName, setNewName] = useState('');
-  const [newDesc, setNewDesc] = useState('');
-  const [rows, setRows] = useState<Row[]>([emptyRow(), emptyRow(), emptyRow()]);
-  const [showBatch, setShowBatch] = useState(false);
-  const [batchText, setBatchText] = useState('');
+  const [catalog, setCatalog] = useState<CatalogLevel[]>([]);
+  const [activeLevel, setActiveLevel] = useState('');
+  const [query, setQuery] = useState('');
+  const [picked, setPicked] = useState<PickedBook[]>([]);
+  const [showCustom, setShowCustom] = useState(false);
+  const [customName, setCustomName] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState<SavedInfo | null>(null);
   const [dayLogs, setDayLogs] = useState<{ log: ReadingLog; lesson?: Lesson }[]>([]);
 
-  // 默认选中最近的一本书
   useEffect(() => {
-    if (bookMode === 'existing' && !lessonId && lessons.length > 0) {
-      setLessonId(lessons[0].id!);
-    }
-  }, [lessons, bookMode, lessonId]);
+    loadCatalog().then(levels => {
+      setCatalog(levels);
+      if (levels.length > 0) setActiveLevel(levels[0].level);
+    });
+  }, []);
 
   const loadDayLogs = useCallback(async () => {
     const logs = await getReadingLogsByDate(date);
@@ -58,112 +65,108 @@ export default function Today() {
 
   useEffect(() => { loadDayLogs(); }, [loadDayLogs]);
 
-  const updateRow = (i: number, patch: Partial<Row>) => {
-    setRows(prev => prev.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
+  /** 已经建过课的 (级别, 册号)，用来在列表里打勾 */
+  const readKeys = useMemo(
+    () => new Set(lessons.filter(l => l.level && l.bookNumber).map(l => `${l.level}#${l.bookNumber}`)),
+    [lessons]
+  );
+
+  const levelBooks = useMemo(() => {
+    const lv = catalog.find(l => l.level === activeLevel);
+    if (!lv) return [];
+    const q = query.trim().toLowerCase();
+    return q
+      ? lv.books.filter(b => b.title.toLowerCase().includes(q) || String(b.n) === q)
+      : lv.books;
+  }, [catalog, activeLevel, query]);
+
+  const toggleBook = (n: number, title: string) => {
+    setPicked(prev => {
+      const at = prev.findIndex(p => p.level === activeLevel && p.n === n);
+      if (at >= 0) return prev.filter((_, i) => i !== at);
+      return [...prev, { level: activeLevel, n, title, rows: [emptyRow()] }];
+    });
   };
 
-  const filledRows = rows.filter(r => r.word.trim());
-
-  const applyBatch = () => {
-    // 每行：单词 | 中文 | 例句
-    const parsed: Row[] = batchText
-      .split('\n')
-      .map(line => line.trim())
-      .filter(Boolean)
-      .map(line => {
-        const parts = line.split('|').map(p => p.trim());
-        return { word: parts[0] || '', chinese: parts[1] || '', example: parts[2] || '' };
-      })
-      .filter(r => r.word);
-
-    if (parsed.length === 0) {
-      setError('没有解析出任何单词，检查一下每行是不是「单词 | 中文 | 例句」');
-      return;
-    }
-    setError('');
-    setRows(prev => [...prev.filter(r => r.word.trim()), ...parsed, emptyRow()]);
-    setBatchText('');
-    setShowBatch(false);
+  const updateRow = (bookIdx: number, rowIdx: number, patch: Partial<Row>) => {
+    setPicked(prev => prev.map((p, i) => (
+      i === bookIdx ? { ...p, rows: p.rows.map((r, j) => (j === rowIdx ? { ...r, ...patch } : r)) } : p
+    )));
   };
+
+  const totalWords = picked.reduce((sum, p) => sum + p.rows.filter(r => r.word.trim()).length, 0);
 
   const handleSave = async () => {
     setError('');
-    if (bookMode === 'new' && !newName.trim()) {
-      setError('给这本书起个名字，比如「RAZ 60: All About Ants」');
-      return;
-    }
-    if (bookMode === 'existing' && !lessonId) {
-      setError('先选一本书，或者点「新建一本书」');
-      return;
-    }
-    if (filledRows.length === 0) {
-      setError('至少要填一个生词');
+    if (picked.length === 0 && !customName.trim()) {
+      setError('先选一本今天读的书');
       return;
     }
 
     setSaving(true);
     try {
-      // 1. 确定课程
-      let targetLessonId = lessonId;
-      let lessonName = lessons.find(l => l.id === lessonId)?.name || '';
-      if (bookMode === 'new') {
-        targetLessonId = await addLesson({ name: newName.trim(), description: newDesc.trim() });
-        lessonName = newName.trim();
-        await refreshLessons();
+      const targets: PickedBook[] = [...picked];
+      if (customName.trim()) {
+        targets.push({ level: '', n: 0, title: customName.trim(), rows: [] });
       }
 
-      // 2. 写入单词（同课同名视为同一个词，只补中文和例句）
-      const existingWords = await getWordsByLesson(targetLessonId);
-      const byName = new Map(existingWords.map(w => [w.word.toLowerCase(), w]));
-      const nextReview = initialReviewDate(date);
-      let added = 0;
-      let merged = 0;
+      const results: SavedInfo['books'] = [];
+      for (const book of targets) {
+        const lesson = book.level
+          ? await findOrCreateLessonByBook({ level: book.level, bookNumber: book.n, title: book.title })
+          : await findOrCreateLessonByName(book.title);
 
-      for (const row of filledRows) {
-        const key = row.word.trim().toLowerCase();
-        const existing = byName.get(key);
-        if (existing) {
-          await updateWord(existing.id!, {
-            chinese: row.chinese.trim() || existing.chinese,
-            example: row.example.trim() || existing.example,
+        const existingWords = await getWordsByLesson(lesson.id!);
+        const byName = new Map(existingWords.map(w => [w.word.toLowerCase(), w]));
+        const nextReview = initialReviewDate(date);
+        let added = 0;
+        let merged = 0;
+
+        for (const row of book.rows.filter(r => r.word.trim())) {
+          const key = row.word.trim().toLowerCase();
+          const existing = byName.get(key);
+          if (existing) {
+            await updateWord(existing.id!, {
+              chinese: row.chinese.trim() || existing.chinese,
+              example: row.example.trim() || existing.example,
+            });
+            merged += 1;
+            continue;
+          }
+          const wordId = await addWord({
+            lessonId: lesson.id!,
+            word: row.word.trim(),
+            phrase: '',
+            example: row.example.trim(),
+            chinese: row.chinese.trim(),
+            imageUrl: '',
+            imageStatus: 'pending',
+            learnedDate: date,
           });
-          merged += 1;
-          continue;
+          // 当天不考，明天首考
+          await seedInitialProgress(wordId, nextReview);
+          added += 1;
         }
-        const wordId = await addWord({
-          lessonId: targetLessonId,
-          word: row.word.trim(),
-          phrase: '',
-          example: row.example.trim(),
-          chinese: row.chinese.trim(),
-          imageUrl: '',
-          imageStatus: 'pending',
-          learnedDate: date,
+
+        await addReadingLog({ date, lessonId: lesson.id! });
+        results.push({
+          lessonId: lesson.id!,
+          label: book.level ? `RAZ ${book.level} 第${book.n}本 · ${book.title}` : book.title,
+          added,
+          merged,
         });
-        // 当天不考，明天首考
-        await seedInitialProgress(wordId, nextReview);
-        byName.set(key, {
-          id: wordId,
-          lessonId: targetLessonId,
-          word: row.word.trim(),
-          phrase: '',
-          example: row.example.trim(),
-          chinese: row.chinese.trim(),
-          imageUrl: '',
-          imageStatus: 'pending',
-          learnedDate: date,
-          createdAt: new Date(),
-        } as Word);
-        added += 1;
       }
 
-      // 3. 记下「这天读了这本书」
-      await addReadingLog({ date, lessonId: targetLessonId });
-
-      setSaved({ lessonId: targetLessonId, lessonName, added, merged });
-      setRows([emptyRow(), emptyRow(), emptyRow()]);
-      setNewName('');
-      setNewDesc('');
+      await refreshLessons();
+      setSaved({
+        books: results,
+        totalAdded: results.reduce((s, r) => s + r.added, 0),
+        totalMerged: results.reduce((s, r) => s + r.merged, 0),
+      });
+      setPicked([]);
+      setCustomName('');
+      setShowCustom(false);
+      setQuery('');
       await loadDayLogs();
     } catch (e) {
       console.error(e);
@@ -182,7 +185,7 @@ export default function Today() {
         {saved ? (
           <SavedSummary
             info={saved}
-            onReview={() => navigate(`/lesson/${saved.lessonId}/review?all=1`)}
+            onReview={(lessonId) => navigate(`/lesson/${lessonId}/review?all=1`)}
             onMore={() => setSaved(null)}
           />
         ) : (
@@ -201,126 +204,139 @@ export default function Today() {
 
             {/* 选书 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm mb-4">
-              <label className="block text-sm font-medium text-gray-600 mb-2">今天读的是</label>
-              <div className="flex gap-2 mb-3">
-                <button
-                  onClick={() => setBookMode('existing')}
-                  className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    bookMode === 'existing' ? 'bg-kid-primary text-white' : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  已有的书
-                </button>
-                <button
-                  onClick={() => setBookMode('new')}
-                  className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    bookMode === 'new' ? 'bg-kid-primary text-white' : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  ＋ 新建一本
-                </button>
-              </div>
-
-              {bookMode === 'existing' ? (
-                <select
-                  value={lessonId}
-                  onChange={(e) => setLessonId(Number(e.target.value))}
-                  className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
-                >
-                  {lessons.length === 0 && <option value={0}>还没有书，点上面「新建一本」</option>}
-                  {lessons.map(l => (
-                    <option key={l.id} value={l.id}>{l.name}</option>
-                  ))}
-                </select>
-              ) : (
-                <div className="space-y-2">
-                  <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    placeholder="书名，如 RAZ 60: All About Ants"
-                    className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
-                  />
-                  <input
-                    type="text"
-                    value={newDesc}
-                    onChange={(e) => setNewDesc(e.target.value)}
-                    placeholder="主题（可选），如 昆虫"
-                    className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* 生词 */}
-            <div className="bg-white rounded-2xl p-4 shadow-sm mb-4">
               <div className="flex items-center justify-between mb-3">
-                <label className="text-sm font-medium text-gray-600">生词</label>
-                <button
-                  onClick={() => setShowBatch(v => !v)}
-                  className="text-xs text-kid-primary font-medium"
-                >
-                  {showBatch ? '收起批量粘贴' : '📋 批量粘贴'}
-                </button>
+                <label className="text-sm font-medium text-gray-600">今天读的是</label>
+                <span className="text-xs text-gray-400">已选 {picked.length} 本</span>
               </div>
 
-              {showBatch && (
-                <div className="mb-4 p-3 bg-gray-50 rounded-xl">
-                  <p className="text-xs text-gray-500 mb-2">
-                    每行一个词，格式：<span className="font-mono">单词 | 中文 | 例句</span>
-                  </p>
-                  <textarea
-                    value={batchText}
-                    onChange={(e) => setBatchText(e.target.value)}
-                    rows={5}
-                    placeholder={'sugarcane | 甘蔗 | Farmers grow sugarcane in the field.\ncotton | 棉花 | This shirt is made of cotton.'}
-                    className="w-full rounded-xl border border-gray-200 p-3 text-sm text-gray-700 bg-white font-mono"
-                  />
+              {/* 级别 */}
+              <div className="flex gap-2 mb-3 overflow-x-auto pb-1">
+                {catalog.map(lv => (
                   <button
-                    onClick={applyBatch}
-                    disabled={!batchText.trim()}
-                    className="w-full mt-2 bg-kid-accent-2 text-white py-2 rounded-xl text-sm font-medium disabled:opacity-40"
+                    key={lv.level}
+                    onClick={() => { setActiveLevel(lv.level); setQuery(''); }}
+                    className={`shrink-0 px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
+                      activeLevel === lv.level
+                        ? 'bg-kid-primary text-white'
+                        : 'bg-gray-100 text-gray-600'
+                    }`}
                   >
-                    解析并填入
+                    {lv.level} 级
                   </button>
-                </div>
-              )}
-
-              <div className="space-y-3">
-                {rows.map((row, i) => (
-                  <div key={i} className="grid grid-cols-12 gap-2">
-                    <input
-                      type="text"
-                      value={row.word}
-                      onChange={(e) => updateRow(i, { word: e.target.value })}
-                      placeholder="单词"
-                      className="col-span-4 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
-                    />
-                    <input
-                      type="text"
-                      value={row.chinese}
-                      onChange={(e) => updateRow(i, { chinese: e.target.value })}
-                      placeholder="中文"
-                      className="col-span-3 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
-                    />
-                    <input
-                      type="text"
-                      value={row.example}
-                      onChange={(e) => updateRow(i, { example: e.target.value })}
-                      placeholder="例句"
-                      className="col-span-5 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
-                    />
-                  </div>
                 ))}
               </div>
 
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="搜书名或册号，如 30 或 Mice"
+                className="w-full rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50 mb-3"
+              />
+
+              <div className="max-h-72 overflow-y-auto -mx-1 px-1">
+                {levelBooks.length === 0 ? (
+                  <p className="text-sm text-gray-400 text-center py-6">没有匹配的书</p>
+                ) : (
+                  <div className="space-y-1.5">
+                    {levelBooks.map(b => {
+                      const isPicked = picked.some(p => p.level === activeLevel && p.n === b.n);
+                      const wasRead = readKeys.has(`${activeLevel}#${b.n}`);
+                      return (
+                        <button
+                          key={b.n}
+                          onClick={() => toggleBook(b.n, b.title)}
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
+                            isPicked ? 'bg-indigo-50 ring-1 ring-kid-primary' : 'bg-gray-50'
+                          }`}
+                        >
+                          <span className={`shrink-0 w-6 h-6 rounded-lg text-xs font-bold flex items-center justify-center ${
+                            isPicked ? 'bg-kid-primary text-white' : 'bg-white text-gray-500'
+                          }`}>
+                            {isPicked ? '✓' : b.n}
+                          </span>
+                          <span className="text-sm text-gray-700 truncate flex-1">{b.title}</span>
+                          {wasRead && !isPicked && <span className="text-[10px] text-gray-400 shrink-0">已记录</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
               <button
-                onClick={() => setRows(prev => [...prev, emptyRow()])}
-                className="w-full mt-3 py-2 rounded-xl border border-dashed border-gray-300 text-sm text-gray-500 hover:border-kid-primary hover:text-kid-primary"
+                onClick={() => setShowCustom(v => !v)}
+                className="w-full mt-3 py-2 rounded-xl border border-dashed border-gray-300 text-xs text-gray-500 hover:border-kid-primary hover:text-kid-primary"
               >
-                ＋ 添加一行
+                {showCustom ? '收起' : '＋ 书单里没有？手动加一本'}
               </button>
+              {showCustom && (
+                <input
+                  type="text"
+                  value={customName}
+                  onChange={(e) => setCustomName(e.target.value)}
+                  placeholder="书名，如 RAZ H 第12本"
+                  className="w-full mt-2 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
+                />
+              )}
             </div>
+
+            {/* 每本书的生词（可以完全不填，只记「读过了」） */}
+            {picked.map((book, bi) => (
+              <div key={`${book.level}-${book.n}`} className="bg-white rounded-2xl p-4 shadow-sm mb-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="min-w-0">
+                    <p className="font-bold text-gray-800 text-sm truncate">
+                      RAZ {book.level} 第{book.n}本
+                    </p>
+                    <p className="text-xs text-gray-500 truncate">{book.title}</p>
+                  </div>
+                  <button
+                    onClick={() => toggleBook(book.n, book.title)}
+                    className="text-gray-300 hover:text-red-400 text-lg leading-none ml-2 shrink-0"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {book.rows.map((row, ri) => (
+                    <div key={ri} className="grid grid-cols-12 gap-1.5">
+                      <input
+                        type="text"
+                        value={row.word}
+                        onChange={(e) => updateRow(bi, ri, { word: e.target.value })}
+                        placeholder="单词"
+                        className="col-span-4 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
+                      />
+                      <input
+                        type="text"
+                        value={row.chinese}
+                        onChange={(e) => updateRow(bi, ri, { chinese: e.target.value })}
+                        placeholder="中文"
+                        className="col-span-3 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
+                      />
+                      <input
+                        type="text"
+                        value={row.example}
+                        onChange={(e) => updateRow(bi, ri, { example: e.target.value })}
+                        placeholder="例句"
+                        className="col-span-5 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setPicked(prev => prev.map((p, i) => (
+                    i === bi ? { ...p, rows: [...p.rows, emptyRow()] } : p
+                  )))}
+                  className="w-full mt-2 py-1.5 rounded-xl border border-dashed border-gray-300 text-xs text-gray-500 hover:border-kid-primary hover:text-kid-primary"
+                >
+                  ＋ 加一个词
+                </button>
+              </div>
+            ))}
 
             {error && (
               <div className="bg-red-50 text-red-600 text-sm rounded-xl p-3 mb-4">{error}</div>
@@ -328,11 +344,18 @@ export default function Today() {
 
             <button
               onClick={handleSave}
-              disabled={saving || filledRows.length === 0}
+              disabled={saving || (picked.length === 0 && !customName.trim())}
               className="w-full bg-kid-primary text-white py-4 rounded-2xl font-bold text-lg disabled:opacity-40 hover:opacity-90 active:scale-95 transition-all"
             >
-              {saving ? '保存中...' : `保存（${filledRows.length} 个词）`}
+              {saving
+                ? '保存中...'
+                : totalWords > 0
+                  ? `保存（${picked.length} 本书，${totalWords} 个词）`
+                  : `保存（${picked.length} 本书）`}
             </button>
+            <p className="text-xs text-gray-400 text-center mt-2">
+              生词可以留空，先记下「今天读了哪几本」也行
+            </p>
           </>
         )}
 
@@ -345,16 +368,24 @@ export default function Today() {
             <div className="space-y-2">
               {dayLogs.map(({ log, lesson }) => (
                 <div key={log.id} className="bg-white rounded-xl p-4 shadow-sm flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-gray-800 text-sm">{lesson?.name || '未知书本'}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{lesson?.wordCount ?? 0} 个词</p>
+                  <div className="min-w-0">
+                    <p className="font-medium text-gray-800 text-sm truncate">
+                      {lesson?.level && lesson.bookNumber
+                        ? `RAZ ${lesson.level} 第${lesson.bookNumber}本`
+                        : lesson?.name || '未知书本'}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5 truncate">
+                      {lesson?.title || ''} {lesson?.wordCount ? `· ${lesson.wordCount} 个词` : ''}
+                    </p>
                   </div>
-                  <button
-                    onClick={() => navigate(`/lesson/${log.lessonId}/review`)}
-                    className="text-xs text-kid-primary font-medium px-3 py-1.5 rounded-lg bg-indigo-50"
-                  >
-                    复习
-                  </button>
+                  {!!lesson?.wordCount && (
+                    <button
+                      onClick={() => navigate(`/lesson/${log.lessonId}/review`)}
+                      className="text-xs text-kid-primary font-medium px-3 py-1.5 rounded-lg bg-indigo-50 shrink-0 ml-2"
+                    >
+                      复习
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -367,33 +398,46 @@ export default function Today() {
 
 function SavedSummary({
   info, onReview, onMore,
-}: { info: SavedInfo; onReview: () => void; onMore: () => void }) {
+}: { info: SavedInfo; onReview: (lessonId: number) => void; onMore: () => void }) {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
-      <span className="text-5xl block mb-3">🎉</span>
-      <h2 className="text-xl font-bold text-gray-800 mb-2">记好了！</h2>
-      <p className="text-sm text-gray-500 mb-1">{info.lessonName}</p>
-      <p className="text-sm text-gray-600 mb-5">
-        新增 <span className="font-bold text-kid-primary">{info.added}</span> 个生词
-        {info.merged > 0 && <>，更新 {info.merged} 个已有的词</>}
-      </p>
-      <p className="text-xs text-gray-400 mb-5">
-        这些词明天开始第一次复习，之后按 1、2、4、7、15、30 天自动安排
-      </p>
-      <div className="space-y-2">
-        <button
-          onClick={onReview}
-          className="w-full bg-kid-primary text-white py-3 rounded-xl font-medium hover:opacity-90"
-        >
-          现在就陪他看一遍
-        </button>
-        <button
-          onClick={onMore}
-          className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200"
-        >
-          再记一本
-        </button>
+    <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className="text-center mb-4">
+        <span className="text-5xl block mb-2">🎉</span>
+        <h2 className="text-xl font-bold text-gray-800">记好了！</h2>
+        <p className="text-sm text-gray-500 mt-1">
+          今天读了 {info.books.length} 本书
+          {info.totalAdded > 0 && <>，新增 {info.totalAdded} 个生词</>}
+          {info.totalMerged > 0 && <>，更新 {info.totalMerged} 个</>}
+        </p>
       </div>
+
+      <div className="space-y-2 mb-4">
+        {info.books.map(b => (
+          <button
+            key={b.lessonId}
+            onClick={() => onReview(b.lessonId)}
+            className="w-full flex items-center justify-between bg-indigo-50 rounded-xl px-4 py-3 text-left"
+          >
+            <span className="text-sm text-gray-700 truncate mr-2">{b.label}</span>
+            <span className="text-xs text-gray-500 shrink-0">
+              {b.added > 0 ? `+${b.added} 词` : '看一遍'}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {info.totalAdded > 0 && (
+        <p className="text-xs text-gray-400 text-center mb-4">
+          新词明天第一次复习，之后按 1、2、4、7、15、30 天自动安排
+        </p>
+      )}
+
+      <button
+        onClick={onMore}
+        className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200"
+      >
+        再记一笔
+      </button>
     </div>
   );
 }
