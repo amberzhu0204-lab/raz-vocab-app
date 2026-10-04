@@ -7,7 +7,7 @@ import {
 } from '../db/database';
 import { loadCatalog } from '../utils/catalog';
 import { initialReviewDate } from '../utils/spaced-repetition';
-import { todayISO, formatDateCN } from '../utils/date';
+import { todayISO, formatDateCN, addDaysISO } from '../utils/date';
 import type { ReadingLog, Lesson, CatalogLevel } from '../types';
 
 interface Row {
@@ -95,6 +95,7 @@ export default function Today() {
   };
 
   const totalWords = picked.reduce((sum, p) => sum + p.rows.filter(r => r.word.trim()).length, 0);
+  const isBackfill = date !== todayISO();
 
   const handleSave = async () => {
     setError('');
@@ -179,8 +180,13 @@ export default function Today() {
   return (
     <div className="h-full overflow-y-auto pb-20 px-4 pt-6">
       <div className="max-w-md mx-auto">
-        <h1 className="text-2xl font-bold text-gray-800 mb-1">✏️ 记录今天的阅读</h1>
-        <p className="text-sm text-gray-500 mb-5">{formatDateCN(date)}</p>
+        <h1 className="text-2xl font-bold text-gray-800 mb-1">
+          ✏️ {isBackfill ? '补记阅读' : '记录今天的阅读'}
+        </h1>
+        <p className="text-sm text-gray-500 mb-5">
+          {formatDateCN(date)}
+          {isBackfill && <span className="text-gray-400">（不是今天）</span>}
+        </p>
 
         {saved ? (
           <SavedSummary
@@ -192,7 +198,34 @@ export default function Today() {
           <>
             {/* 日期 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm mb-4">
-              <label className="block text-sm font-medium text-gray-600 mb-1">日期</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-sm font-medium text-gray-600">日期</label>
+                {isBackfill && (
+                  <span className="text-xs font-medium text-kid-secondary bg-orange-50 px-2 py-0.5 rounded-lg">
+                    补记以前读的
+                  </span>
+                )}
+              </div>
+              <div className="flex gap-2 mb-2">
+                {[
+                  { label: '今天', days: 0 },
+                  { label: '昨天', days: 1 },
+                  { label: '前天', days: 2 },
+                ].map(q => {
+                  const d = addDaysISO(todayISO(), -q.days);
+                  return (
+                    <button
+                      key={q.label}
+                      onClick={() => setDate(d)}
+                      className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
+                        date === d ? 'bg-kid-primary text-white' : 'bg-gray-100 text-gray-600'
+                      }`}
+                    >
+                      {q.label}
+                    </button>
+                  );
+                })}
+              </div>
               <input
                 type="date"
                 value={date}
@@ -200,6 +233,9 @@ export default function Today() {
                 onChange={(e) => setDate(e.target.value || todayISO())}
                 className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
               />
+              <p className="text-xs text-gray-400 mt-2">
+                想补记更早的，直接在上面选日期 —— 补记的生词按那天算，早就该复习了
+              </p>
             </div>
 
             {/* 选书 */}
