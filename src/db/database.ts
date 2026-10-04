@@ -351,7 +351,12 @@ export async function exportAllData() {
     db.reviewLogs.toArray(),
   ]);
   return JSON.stringify(
-    { lessons, words, wordProgress, dailyLogs, readingLogs, reviewLogs },
+    {
+      // 标记出这是「完整备份」而不是单纯一份词表，导入时据此判断
+      kind: 'raz-vocab-full-backup',
+      exportedAt: new Date().toISOString(),
+      lessons, words, wordProgress, dailyLogs, readingLogs, reviewLogs,
+    },
     null,
     2
   );
@@ -394,6 +399,22 @@ export async function mergeImportWords(words: Omit<Word, 'id' | 'createdAt'>[]):
   }
 }
 
+/** JSON 里 Date 会变成字符串，读回来要还原，否则排序和日期计算会错 */
+function reviveDates<T>(rows: T[] | undefined, fields: (keyof T)[]): T[] {
+  if (!Array.isArray(rows)) return [];
+  return rows.map(row => {
+    const out: any = { ...row };
+    for (const f of fields) {
+      if (typeof out[f] === 'string') out[f] = new Date(out[f]);
+    }
+    return out as T;
+  });
+}
+
+/**
+ * 从完整备份覆盖恢复（不是合并）—— 调用前必须让用户确认过。
+ * 保留原 id，所以复习进度能重新挂回对应的词上。
+ */
 export async function importAllData(json: string) {
   const data = JSON.parse(json);
   await db.transaction(
@@ -406,12 +427,16 @@ export async function importAllData(json: string) {
       await db.dailyLogs.clear();
       await db.readingLogs.clear();
       await db.reviewLogs.clear();
-      if (data.lessons) await db.lessons.bulkAdd(data.lessons);
-      if (data.words) await db.words.bulkAdd(data.words);
-      if (data.wordProgress) await db.wordProgress.bulkAdd(data.wordProgress);
-      if (data.dailyLogs) await db.dailyLogs.bulkAdd(data.dailyLogs);
-      if (data.readingLogs) await db.readingLogs.bulkAdd(data.readingLogs);
-      if (data.reviewLogs) await db.reviewLogs.bulkAdd(data.reviewLogs);
+      await db.lessons.bulkAdd(reviveDates<any>(data.lessons, ['createdAt']));
+      await db.words.bulkAdd(reviveDates<any>(data.words, ['createdAt']));
+      // nextReviewDate 必须是真正的 Date：它是拿 `<= new Date()` 比较的，
+      // 留成字符串会得到 NaN 比较 → 恢复出来的词永远不到期
+      await db.wordProgress.bulkAdd(
+        reviveDates<any>(data.wordProgress, ['lastReviewed', 'nextReviewDate'])
+      );
+      await db.dailyLogs.bulkAdd(reviveDates<any>(data.dailyLogs, []));
+      await db.readingLogs.bulkAdd(reviveDates<any>(data.readingLogs, ['createdAt']));
+      await db.reviewLogs.bulkAdd(reviveDates<any>(data.reviewLogs, ['reviewedAt']));
     }
   );
 }

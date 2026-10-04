@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLessons } from '../hooks/useLessons';
 import { useWords } from '../hooks/useWords';
-import { exportAllData, mergeImportWords, bulkAddWords, db, resetAllContent } from '../db/database';
-import { todayISO } from '../utils/date';
+import {
+  exportAllData, importAllData, mergeImportWords, bulkAddWords, db, resetAllContent,
+} from '../db/database';
+import { todayISO, formatDateCN } from '../utils/date';
 import { loadCatalog } from '../utils/catalog';
 import LessonForm from '../components/LessonForm';
 import WordForm from '../components/WordForm';
@@ -11,6 +13,9 @@ import type { Lesson, Word, CatalogLevel } from '../types';
 import { unsplashService } from '../services/unsplash';
 
 type Tab = 'lessons' | 'words' | 'settings';
+
+/** 上次导出备份的日期，只用于提醒，不存在这里也不影响功能 */
+const LAST_BACKUP_KEY = 'raz-vocab-last-backup';
 
 export default function Admin() {
   const [tab, setTab] = useState<Tab>('lessons');
@@ -23,6 +28,7 @@ export default function Admin() {
   const [catalog, setCatalog] = useState<CatalogLevel[]>([]);
   const [unsplashKey, setUnsplashKey] = useState('');
   const [pickingImageFor, setPickingImageFor] = useState<Word | null>(null);
+  const [lastBackup, setLastBackup] = useState<string | null>(null);
 
   // Batch import state
   const [showBatchImport, setShowBatchImport] = useState(false);
@@ -55,6 +61,7 @@ export default function Admin() {
   }, [words, lessons]);
 
   useEffect(() => { loadCatalog().then(setCatalog); }, []);
+  useEffect(() => { setLastBackup(localStorage.getItem(LAST_BACKUP_KEY)); }, []);
 
   const handleExport = async () => {
     const json = await exportAllData();
@@ -65,6 +72,8 @@ export default function Admin() {
     a.download = `raz-vocab-backup-${todayISO()}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    localStorage.setItem(LAST_BACKUP_KEY, todayISO());
+    setLastBackup(todayISO());
   };
 
   const handleImport = () => {
@@ -77,23 +86,29 @@ export default function Admin() {
       const text = await file.text();
       try {
         const data = JSON.parse(text);
-        // If it's a full export or just words array
         if (Array.isArray(data)) {
-          // Just words array
-          if (!confirm(`将合并导入 ${data.length} 个单词（已存在的会更新），确定继续？`)) return;
+          // 一份纯词表（比如从别处导进来的）→ 合并，不动已有记录
+          if (!confirm(`这是一份词表，共 ${data.length} 个单词。\n\n会「合并」进现有课程（同名单词更新，其余保留），复习记录不受影响。继续吗？`)) return;
           await mergeImportWords(data);
+        } else if (data.kind === 'raz-vocab-full-backup' || Array.isArray(data.lessons)) {
+          // 完整备份 → 覆盖恢复
+          const when = data.exportedAt ? new Date(data.exportedAt).toLocaleString('zh-CN') : '未知时间';
+          const counts = [
+            `备份时间：${when}`,
+            `读过的书 ${data.lessons?.length ?? 0} 本`,
+            `生词 ${data.words?.length ?? 0} 个`,
+            `复习明细 ${data.reviewLogs?.length ?? 0} 条`,
+          ].join('\n');
+          if (!confirm(`这是完整备份：\n\n${counts}\n\n恢复会用这个备份「覆盖」这台设备上的全部记录——现在的东西会被替换掉。\n\n建议先「导出数据」存一份现在的，再继续。确定要恢复吗？`)) return;
+          if (!confirm('再确认一次：覆盖后当前数据就找不回来了。真的要恢复吗？')) return;
+          await importAllData(text);
         } else {
-          // Full data export
-          if (!confirm('检测到完整备份文件。合并导入（更新已有+新增）还是覆盖导入？\n\n"确定" = 合并导入\n"取消" = 不导入')) {
-            return;
-          }
-          if (data.words && Array.isArray(data.words)) {
-            await mergeImportWords(data.words);
-          }
+          alert('没认出这个文件是什么。请选择用「导出数据」生成的备份文件。');
+          return;
         }
         window.location.reload();
-      } catch {
-        alert('文件格式错误，请检查 JSON 内容');
+      } catch (err) {
+        alert(`文件格式错误，没有导入任何东西。\n\n${err instanceof Error ? err.message : ''}`);
       }
     };
     input.click();
@@ -483,7 +498,7 @@ export default function Admin() {
             {/* Import / Export */}
             <div className="bg-white rounded-2xl p-5 shadow-sm">
               <h3 className="font-bold text-gray-800 mb-3">💾 数据备份</h3>
-              <div className="flex gap-3">
+              <div className="flex gap-3 mb-3">
                 <button
                   onClick={handleExport}
                   className="flex-1 bg-kid-success text-white py-3 rounded-xl font-medium hover:opacity-90"
@@ -497,6 +512,20 @@ export default function Admin() {
                   导入数据
                 </button>
               </div>
+              {lastBackup ? (
+                <p className="text-sm text-gray-500 mb-2">
+                  上次备份：{formatDateCN(lastBackup)}
+                </p>
+              ) : (
+                <p className="text-sm text-amber-600 mb-2">还没备份过 —— 建议现在就导出一份存起来</p>
+              )}
+              <p className="text-xs text-gray-400 leading-relaxed">
+                所有记录只存在这台设备的浏览器里，换设备或清除网站数据都会丢。
+                「导出数据」会下载一个 JSON 文件（里面是读过的书、生词、复习进度和全部历史），
+                把它存到 iCloud 云盘或网盘里；哪天需要就回来点「导入数据」。<br />
+                注意：Safari 里如果连续 7 天没打开过这个页面，系统会自动清掉它 ——
+                <span className="text-gray-500">把页面「添加到主屏幕」当 App 用就不会被清。</span>
+              </p>
             </div>
 
             {/* 清空 */}
