@@ -6,6 +6,7 @@ import {
   seedInitialProgress, getLesson, findOrCreateLessonByBook, findOrCreateLessonByName,
 } from '../db/database';
 import { loadCatalog } from '../utils/catalog';
+import { applyHint, lookupWordHint } from '../utils/wordHints';
 import { initialReviewDate } from '../utils/spaced-repetition';
 import { todayISO, formatDateCN, addDaysISO } from '../utils/date';
 import type { ReadingLog, Lesson, CatalogLevel } from '../types';
@@ -14,6 +15,8 @@ interface Row {
   word: string;
   chinese: string;
   example: string;
+  /** 上次自动补进去的内容，用来判断这两个框有没有被手动改过 */
+  auto?: { chinese?: string; example?: string };
 }
 
 const emptyRow = (): Row => ({ word: '', chinese: '', example: '' });
@@ -92,6 +95,25 @@ export default function Today() {
     setPicked(prev => prev.map((p, i) => (
       i === bookIdx ? { ...p, rows: p.rows.map((r, j) => (j === rowIdx ? { ...r, ...patch } : r)) } : p
     )));
+  };
+
+  /**
+   * 只打了英文时，把中文和例句补上。
+   * 边打边补（不用等失焦），但绝不覆盖家长手填或手改过的内容。
+   */
+  const patchRowWithHint = (bookIdx: number, rowIdx: number, word: string, force = false) => {
+    setPicked(prev => prev.map((p, i) => {
+      if (i !== bookIdx) return p;
+      return {
+        ...p,
+        rows: p.rows.map((r, j) => {
+          if (j !== rowIdx) return r;
+          const next: Row = { ...r, word };
+          const filled = applyHint(word, { chinese: next.chinese, example: next.example }, r.auto, force);
+          return filled ? { ...next, chinese: filled.chinese, example: filled.example, auto: filled.auto } : next;
+        }),
+      };
+    }));
   };
 
   const totalWords = picked.reduce((sum, p) => sum + p.rows.filter(r => r.word.trim()).length, 0);
@@ -318,6 +340,11 @@ export default function Today() {
             </div>
 
             {/* 每本书的生词（可以完全不填，只记「读过了」） */}
+            {picked.length > 0 && (
+              <p className="text-xs text-gray-400 mb-3 px-1">
+                💡 生词只打英文就行 —— 中文和例句会自动补上，而且都是从这本书的正文里挑的，随时能改
+              </p>
+            )}
             {picked.map((book, bi) => (
               <div key={`${book.level}-${book.n}`} className="bg-white rounded-2xl p-4 shadow-sm mb-4">
                 <div className="flex items-start justify-between mb-3">
@@ -336,31 +363,59 @@ export default function Today() {
                 </div>
 
                 <div className="space-y-2">
-                  {book.rows.map((row, ri) => (
-                    <div key={ri} className="grid grid-cols-12 gap-1.5">
-                      <input
-                        type="text"
-                        value={row.word}
-                        onChange={(e) => updateRow(bi, ri, { word: e.target.value })}
-                        placeholder="单词"
-                        className="col-span-4 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
-                      />
-                      <input
-                        type="text"
-                        value={row.chinese}
-                        onChange={(e) => updateRow(bi, ri, { chinese: e.target.value })}
-                        placeholder="中文"
-                        className="col-span-3 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
-                      />
-                      <input
-                        type="text"
-                        value={row.example}
-                        onChange={(e) => updateRow(bi, ri, { example: e.target.value })}
-                        placeholder="例句"
-                        className="col-span-5 rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-gray-50"
-                      />
-                    </div>
-                  ))}
+                  {book.rows.map((row, ri) => {
+                    const hint = lookupWordHint(row.word);
+                    return (
+                      <div key={ri} className="space-y-1.5 rounded-xl bg-gray-50/70 p-2">
+                        <div className="flex gap-1.5">
+                          <div className="relative flex-1">
+                            <input
+                              type="text"
+                              value={row.word}
+                              onChange={(e) => patchRowWithHint(bi, ri, e.target.value)}
+                              placeholder="单词"
+                              className="w-full rounded-xl border border-gray-200 p-2.5 pr-8 text-sm text-gray-700 bg-white"
+                            />
+                            {hint && (
+                              <button
+                                type="button"
+                                onClick={() => patchRowWithHint(bi, ri, row.word, true)}
+                                title="重新套用书里的释义和例句"
+                                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-sm leading-none opacity-70 hover:opacity-100"
+                              >
+                                ✨
+                              </button>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setPicked(prev => prev.map((p, i) => (
+                              i === bi ? { ...p, rows: p.rows.filter((_, j) => j !== ri) } : p
+                            )))}
+                            disabled={book.rows.length === 1}
+                            className="shrink-0 px-2.5 text-gray-300 hover:text-red-400 disabled:opacity-30 text-lg leading-none"
+                          >
+                            ×
+                          </button>
+                        </div>
+                        {/* 自动补的中文可能有一二十个字，例句更是整句 —— 各占一行才看得全 */}
+                        <input
+                          type="text"
+                          value={row.chinese}
+                          onChange={(e) => updateRow(bi, ri, { chinese: e.target.value })}
+                          placeholder="中文意思"
+                          className="w-full rounded-xl border border-gray-200 p-2.5 text-sm text-gray-700 bg-white"
+                        />
+                        <input
+                          type="text"
+                          value={row.example}
+                          onChange={(e) => updateRow(bi, ri, { example: e.target.value })}
+                          placeholder="例句（自动带出这本书里的原句）"
+                          className="w-full rounded-xl border border-gray-200 p-2.5 text-sm text-gray-600 bg-white"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <button

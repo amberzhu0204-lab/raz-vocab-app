@@ -24,6 +24,14 @@ export interface CatalogLevel {
   books: CatalogBook[];
 }
 
+/** 录生词时自动补的内容（来自 public/word-hints.json，只读） */
+export interface WordHint {
+  /** 中文释义 */
+  zh?: string;
+  /** 例句 —— 取自孩子读过的那本书的原文 */
+  ex?: string;
+}
+
 export interface Word {
   id?: number;
   lessonId: number;

@@ -11,6 +11,7 @@ import Today from './pages/Today';
 import GlobalReview from './pages/GlobalReview';
 import { resetAllContent } from './db/database';
 import { loadCatalog } from './utils/catalog';
+import { loadWordHints } from './utils/wordHints';
 
 const GENERATION_KEY = 'raz-data-generation';
 /** 改成 2：老数据没有系列/册号，一次性清空重新录 */
@@ -36,7 +37,7 @@ async function doBoot(onStatus?: (s: string) => void): Promise<void> {
       localStorage.setItem(GENERATION_KEY, String(CURRENT_GENERATION));
       localStorage.removeItem('raz-data-version');
     }
-    await loadCatalog();
+    await Promise.all([loadCatalog(), loadWordHints()]);
   } catch (e) {
     console.warn('Boot failed:', (e as Error)?.message || e);
   }
