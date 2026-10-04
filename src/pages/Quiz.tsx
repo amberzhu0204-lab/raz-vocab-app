@@ -8,13 +8,14 @@ import { getCardColor } from '../utils/colors';
 import { todayISO } from '../utils/date';
 import type { Lesson, Word, MasteryLevel, ReviewOutcome } from '../types';
 
-type QuestionType = 'word-to-chinese' | 'image-to-word';
-
 interface Question {
-  type: QuestionType;
   word: Word;
   options: Word[];
 }
+
+/** 能出题的前提是有中文意思 —— 没中文就没法「选中文」 */
+const meaningOf = (w: Word) => w.chinese?.trim() || '';
+const hasMeaning = (w: Word) => Boolean(meaningOf(w));
 
 export default function Quiz() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -38,16 +39,24 @@ export default function Quiz() {
       const l = await getLesson(Number(lessonId));
       if (!l) { navigate('/lessons'); return; }
       setLesson(l);
-      const words = await getWordsByLesson(l.id!);
+      const words = (await getWordsByLesson(l.id!)).filter(hasMeaning);
       if (words.length < 2) { setDone(true); setLoading(false); return; }
 
       const shuffled = [...words].sort(() => Math.random() - 0.5);
       const qs: Question[] = shuffled.map((word) => {
-        const type: QuestionType = Math.random() > 0.5 ? 'word-to-chinese' : 'image-to-word';
-        // Pick 3 other random words as distractors
-        const others = words.filter(w => w.id !== word.id).sort(() => Math.random() - 0.5).slice(0, 3);
+        // 干扰项：同课里另外三个意思不同的词。
+        // 按中文去重 —— 否则会出现两个一模一样的选项（比如两本书都收过「n. 象」）。
+        const seen = new Set([meaningOf(word)]);
+        const others: Word[] = [];
+        for (const w of [...words].sort(() => Math.random() - 0.5)) {
+          const zh = meaningOf(w);
+          if (w.id === word.id || seen.has(zh)) continue;
+          seen.add(zh);
+          others.push(w);
+          if (others.length === 3) break;
+        }
         const options = [word, ...others].sort(() => Math.random() - 0.5);
-        return { type, word, options };
+        return { word, options };
       });
 
       setQuestions(qs);
@@ -174,31 +183,18 @@ export default function Quiz() {
       {/* Question */}
       <div className="flex-1 flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-md">
-          {/* Prompt */}
-          <div className={`rounded-3xl p-8 mb-6 flex items-center justify-center min-h-40 ${getCardColor(currentIndex)}`}>
-            {question.type === 'word-to-chinese' ? (
-              <h2 className="text-4xl font-bold text-gray-800">{question.word.word}</h2>
-            ) : question.word.imageUrl && question.word.imageStatus === 'ready' ? (
-              <img
-                src={question.word.imageUrl}
-                alt="guess the word"
-                className="w-full max-h-48 object-cover rounded-2xl"
-              />
-            ) : (
-              <div className="w-40 h-40 rounded-full bg-white/50 flex items-center justify-center">
-                <span className="text-6xl font-bold text-gray-600">
-                  {question.word.word.charAt(0).toUpperCase()}
-                </span>
-              </div>
+          {/* 题目一律是「给英文单词」 */}
+          <div className={`rounded-3xl p-8 mb-6 flex flex-col items-center justify-center min-h-40 ${getCardColor(currentIndex)}`}>
+            <h2 className="text-4xl font-bold text-gray-800">{question.word.word}</h2>
+            {(question.word.example || question.word.phrase) && (
+              <p className="text-sm text-gray-600 mt-3 text-center">{question.word.example || question.word.phrase}</p>
             )}
           </div>
 
-          <p className="text-center text-sm text-gray-500 mb-4">
-            {question.type === 'word-to-chinese' ? '选出正确的中文意思' : '选出正确的英文单词'}
-          </p>
+          <p className="text-center text-sm text-gray-500 mb-4">选出正确的中文意思</p>
 
-          {/* Options */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* Options —— 中文释义比英文长，单列才看得清 */}
+          <div className="grid grid-cols-1 gap-2.5">
             {question.options.map((opt, idx) => {
               const isSelected = selected === idx;
               const isCorrect = opt.id === question.word.id;
@@ -219,9 +215,9 @@ export default function Quiz() {
                   key={idx}
                   onClick={() => handleAnswer(idx)}
                   disabled={showResult}
-                  className={`${btnClass} rounded-2xl p-4 font-medium text-lg transition-all active:scale-95 disabled:cursor-default`}
+                  className={`${btnClass} rounded-2xl p-4 font-medium text-base leading-snug transition-all active:scale-95 disabled:cursor-default`}
                 >
-                  {question.type === 'word-to-chinese' ? (opt.chinese || opt.word) : opt.word}
+                  {opt.chinese}
                 </button>
               );
             })}
