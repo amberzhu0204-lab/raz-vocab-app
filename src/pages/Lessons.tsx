@@ -3,6 +3,7 @@ import { useLessons } from '../hooks/useLessons';
 import { getLessonProgress } from '../db/database';
 import { useEffect, useState } from 'react';
 import type { WordProgress } from '../types';
+import { MASTERED_LEVEL } from '../types';
 
 export default function Lessons() {
   const { lessons, loading, remove } = useLessons();
@@ -48,7 +49,7 @@ export default function Lessons() {
           <div className="space-y-3">
             {lessons.map((lesson) => {
               const progress = progressMap[lesson.id!] || [];
-              const mastered = progress.filter(p => p.masteryLevel === 3).length;
+              const mastered = progress.filter(p => p.masteryLevel === MASTERED_LEVEL).length;
               const pct = lesson.wordCount > 0 ? Math.round((mastered / lesson.wordCount) * 100) : 0;
 
               return (

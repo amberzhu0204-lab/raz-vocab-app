@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Word, Lesson } from '../types';
+import { todayISO } from '../utils/date';
 
 interface WordFormProps {
   lessons: Lesson[];
@@ -13,6 +14,7 @@ export default function WordForm({ lessons, lessonId, word, onSave, onCancel }: 
   const [form, setForm] = useState({
     word: word?.word || '',
     phrase: word?.phrase || '',
+    example: word?.example || '',
     chinese: word?.chinese || '',
     lessonId: word?.lessonId ?? lessonId ?? (lessons[0]?.id ?? 0),
     imageUrl: word?.imageUrl || '',
@@ -28,8 +30,10 @@ export default function WordForm({ lessons, lessonId, word, onSave, onCancel }: 
       ...form,
       word: form.word.trim(),
       phrase: form.phrase.trim(),
+      example: form.example.trim(),
       chinese: form.chinese.trim(),
       lessonId: Number(form.lessonId),
+      learnedDate: word?.learnedDate || todayISO(),
     });
     setSaving(false);
   };
@@ -66,23 +70,35 @@ export default function WordForm({ lessons, lessonId, word, onSave, onCancel }: 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">词组/例句</label>
-        <input
-          type="text"
-          value={form.phrase}
-          onChange={(e) => setForm({ ...form, phrase: e.target.value })}
-          placeholder="如：a gigantic elephant"
-          className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
-        />
-      </div>
-
-      <div>
         <label className="block text-sm font-medium text-gray-600 mb-1">中文释义</label>
         <input
           type="text"
           value={form.chinese}
           onChange={(e) => setForm({ ...form, chinese: e.target.value })}
           placeholder="如：巨大的"
+          className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-600 mb-1">例句</label>
+        <input
+          type="text"
+          value={form.example}
+          onChange={(e) => setForm({ ...form, example: e.target.value })}
+          placeholder="如：An elephant is a gigantic animal."
+          className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
+        />
+        <p className="text-xs text-gray-400 mt-1">复习时先看到单词和这句例句，再回忆中文意思</p>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-600 mb-1">词组/短语（可选）</label>
+        <input
+          type="text"
+          value={form.phrase}
+          onChange={(e) => setForm({ ...form, phrase: e.target.value })}
+          placeholder="如：a gigantic elephant"
           className="w-full rounded-xl border border-gray-200 p-3 text-gray-700 bg-gray-50"
         />
       </div>

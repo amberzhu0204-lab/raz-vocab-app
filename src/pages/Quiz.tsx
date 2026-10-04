@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getLesson, getWordsByLesson, upsertProgress, upsertDailyLog } from '../db/database';
+import {
+  getLesson, getWordsByLesson, getWordProgress, recordReview, upsertDailyLog,
+} from '../db/database';
 import { calcNextReview } from '../utils/spaced-repetition';
 import { getCardColor } from '../utils/colors';
-import type { Lesson, Word, MasteryLevel } from '../types';
+import { todayISO } from '../utils/date';
+import type { Lesson, Word, MasteryLevel, ReviewOutcome } from '../types';
 
 type QuestionType = 'word-to-chinese' | 'image-to-word';
 
@@ -24,6 +27,7 @@ export default function Quiz() {
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState({ correct: 0, total: 0 });
+  const [results, setResults] = useState<ReviewOutcome[]>([]);
   const [done, setDone] = useState(false);
 
   // Generate distractors from same lesson's words
@@ -61,6 +65,7 @@ export default function Quiz() {
     const isCorrect = question.options[optionIndex].id === question.word.id;
     if (isCorrect) setScore(prev => ({ ...prev, correct: prev.correct + 1 }));
     setScore(prev => ({ ...prev, total: prev.total + 1 }));
+    setResults(prev => [...prev, isCorrect ? 'correct' : 'wrong']);
   }, [showResult, currentIndex, questions]);
 
   const handleNext = useCallback(async () => {
@@ -69,8 +74,7 @@ export default function Quiz() {
       setSelected(null);
       setShowResult(false);
     } else {
-      // Log session
-      const today = new Date().toISOString().slice(0, 10);
+      const today = todayISO();
       await upsertDailyLog({
         date: today,
         lessonId: Number(lessonId),
@@ -80,25 +84,33 @@ export default function Quiz() {
         durationMinutes: 0,
       });
 
-      // Update progress for all quizzed words
-      for (const q of questions) {
-        const isCorrect = true; // simplified: mark all as reviewed
-        const currentLevel: MasteryLevel = 0;
-        const { nextReviewDate, masteryLevel } = calcNextReview(currentLevel, isCorrect);
-        await upsertProgress({
+      // 按每题实际对错更新进度，且保留已有的复习次数和等级
+      for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        const outcome: ReviewOutcome = results[i] ?? 'unknown';
+        const existing = await getWordProgress(q.word.id!);
+        const currentLevel: MasteryLevel = existing?.masteryLevel ?? 0;
+        const { nextReviewDate, masteryLevel } = calcNextReview(currentLevel, outcome);
+
+        await recordReview({
           wordId: q.word.id!,
-          masteryLevel,
-          reviewCount: 1,
-          correctCount: 1,
-          wrongCount: 0,
-          lastReviewed: new Date(),
-          nextReviewDate,
+          lessonId: q.word.lessonId,
+          date: today,
+          result: outcome,
+          progress: {
+            masteryLevel,
+            reviewCount: (existing?.reviewCount ?? 0) + 1,
+            correctCount: (existing?.correctCount ?? 0) + (outcome === 'correct' ? 1 : 0),
+            wrongCount: (existing?.wrongCount ?? 0) + (outcome === 'wrong' ? 1 : 0),
+            lastReviewed: new Date(),
+            nextReviewDate,
+          },
         });
       }
 
       setDone(true);
     }
-  }, [currentIndex, questions, lessonId, score]);
+  }, [currentIndex, questions, lessonId, score, results]);
 
   if (loading) {
     return (

@@ -1,19 +1,29 @@
 import Dexie, { type Table } from 'dexie';
-import type { Lesson, Word, WordProgress, DailyLog } from '../types';
+import type {
+  Lesson, Word, WordProgress, DailyLog, ReadingLog, ReviewLog, ReviewOutcome,
+} from '../types';
 
 export class RazVocabDB extends Dexie {
   lessons!: Table<Lesson, number>;
   words!: Table<Word, number>;
   wordProgress!: Table<WordProgress, number>;
   dailyLogs!: Table<DailyLog, number>;
+  readingLogs!: Table<ReadingLog, number>;
+  reviewLogs!: Table<ReviewLog, number>;
 
   constructor() {
     super('RazVocabDB');
+    // v1 已发布，切勿改动这一块（改动索引会触发重建）
     this.version(1).stores({
       lessons: '++id, name, createdAt',
       words: '++id, lessonId, word, imageStatus',
       wordProgress: '++id, wordId, masteryLevel, lastReviewed, nextReviewDate',
       dailyLogs: '++id, date, lessonId',
+    });
+    // v2 只声明新增的表，老表数据自动继承
+    this.version(2).stores({
+      readingLogs: '++id, date, lessonId',
+      reviewLogs: '++id, wordId, lessonId, date, result, reviewedAt',
     });
   }
 }
@@ -42,11 +52,24 @@ export async function updateLesson(id: number, data: Partial<Lesson>): Promise<n
 }
 
 export async function deleteLesson(id: number): Promise<void> {
-  await db.words.where('lessonId').equals(id).delete();
-  await db.wordProgress.where('wordId').anyOf(
-    (await db.words.where('lessonId').equals(id).toArray()).map(w => w.id!)
-  ).delete();
-  await db.lessons.delete(id);
+  // 先拿到单词 id，再删单词 —— 顺序反了的话第二次查询恒为空
+  const words = await db.words.where('lessonId').equals(id).toArray();
+  const wordIds = words.map(w => w.id!).filter(Boolean);
+
+  await db.transaction(
+    'rw',
+    [db.lessons, db.words, db.wordProgress, db.reviewLogs, db.readingLogs],
+    async () => {
+      if (wordIds.length > 0) {
+        await db.wordProgress.where('wordId').anyOf(wordIds).delete();
+        await db.reviewLogs.where('wordId').anyOf(wordIds).delete();
+      }
+      await db.words.where('lessonId').equals(id).delete();
+      await db.reviewLogs.where('lessonId').equals(id).delete();
+      await db.readingLogs.where('lessonId').equals(id).delete();
+      await db.lessons.delete(id);
+    }
+  );
 }
 
 // ── Words ──
@@ -71,6 +94,7 @@ export async function deleteWord(id: number): Promise<void> {
   const word = await db.words.get(id);
   if (word) {
     await db.wordProgress.where('wordId').equals(id).delete();
+    await db.reviewLogs.where('wordId').equals(id).delete();
     await db.words.delete(id);
     const lesson = await db.lessons.get(word.lessonId);
     if (lesson) {
@@ -91,6 +115,7 @@ export async function getAllProgress(): Promise<WordProgress[]> {
 export async function getLessonProgress(lessonId: number): Promise<WordProgress[]> {
   const words = await getWordsByLesson(lessonId);
   const wordIds = words.map(w => w.id!);
+  if (wordIds.length === 0) return [];
   return db.wordProgress.where('wordId').anyOf(wordIds).toArray();
 }
 
@@ -103,17 +128,121 @@ export async function upsertProgress(progress: Omit<WordProgress, 'id'>): Promis
   return db.wordProgress.add(progress);
 }
 
+/** 新录的词建一条初始进度：未学，录入日次日首考 */
+export async function seedInitialProgress(wordId: number, nextReviewDate: Date): Promise<void> {
+  const existing = await db.wordProgress.where('wordId').equals(wordId).first();
+  if (existing) return;
+  await db.wordProgress.add({
+    wordId,
+    masteryLevel: 0,
+    reviewCount: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    lastReviewed: null,
+    nextReviewDate,
+  });
+}
+
+/** 本课到期（含从未复习）的词 */
 export async function getDueWords(lessonId: number): Promise<{ word: Word; progress: WordProgress | undefined }[]> {
   const words = await getWordsByLesson(lessonId);
   const now = new Date();
   const results: { word: Word; progress: WordProgress | undefined }[] = [];
   for (const word of words) {
     const progress = await getWordProgress(word.id!);
-    if (!progress || !progress.nextReviewDate || progress.nextReviewDate <= now) {
-      results.push({ word, progress });
-    }
+    if (isDue(progress, now)) results.push({ word, progress });
   }
-  return results;
+  return sortByUrgency(results);
+}
+
+/**
+ * 全部课程到期（含从未复习）的词。
+ * 注意：不能用 where('nextReviewDate').belowOrEqual(now) —— 从未复习的词没有
+ * progress 行、且 nextReviewDate: null 不是合法索引键，两种词都会被索引查询漏掉。
+ */
+export async function getAllDueWords(): Promise<{ word: Word; progress: WordProgress | undefined }[]> {
+  const now = new Date();
+  const [words, progress] = await Promise.all([
+    db.words.toArray(),
+    db.wordProgress.toArray(),
+  ]);
+  const byWord = new Map<number, WordProgress>();
+  for (const p of progress) byWord.set(p.wordId, p);
+
+  const results = words
+    .map(word => ({ word, progress: byWord.get(word.id!) }))
+    .filter(({ progress: p }) => isDue(p, now));
+
+  return sortByUrgency(results);
+}
+
+function isDue(progress: WordProgress | undefined, now: Date): boolean {
+  if (!progress || !progress.nextReviewDate) return true;
+  return progress.nextReviewDate <= now;
+}
+
+/** 逾期最久的排前面，从没学过的新词排最后 */
+function sortByUrgency(
+  items: { word: Word; progress: WordProgress | undefined }[]
+): { word: Word; progress: WordProgress | undefined }[] {
+  return [...items].sort((a, b) => {
+    const at = a.progress?.nextReviewDate ? new Date(a.progress.nextReviewDate).getTime() : Number.POSITIVE_INFINITY;
+    const bt = b.progress?.nextReviewDate ? new Date(b.progress.nextReviewDate).getTime() : Number.POSITIVE_INFINITY;
+    return at - bt;
+  });
+}
+
+// ── Reading Logs（今天读了哪本书）──
+export async function addReadingLog(log: Omit<ReadingLog, 'id' | 'createdAt'>): Promise<number | undefined> {
+  const existing = await db.readingLogs
+    .where('date').equals(log.date)
+    .filter(r => r.lessonId === log.lessonId)
+    .first();
+  if (existing) return existing.id;
+  return db.readingLogs.add({ ...log, createdAt: new Date() });
+}
+
+export async function getReadingLogs(limit = 60): Promise<ReadingLog[]> {
+  return db.readingLogs.orderBy('date').reverse().limit(limit).toArray();
+}
+
+export async function getReadingLogsByDate(date: string): Promise<ReadingLog[]> {
+  return db.readingLogs.where('date').equals(date).toArray();
+}
+
+// ── Review Logs（逐词复习明细）──
+export async function addReviewLog(log: Omit<ReviewLog, 'id'>): Promise<number> {
+  return db.reviewLogs.add(log);
+}
+
+export async function getReviewLogs(limit = 200): Promise<ReviewLog[]> {
+  return db.reviewLogs.orderBy('reviewedAt').reverse().limit(limit).toArray();
+}
+
+export async function getReviewLogsByDate(date: string): Promise<ReviewLog[]> {
+  return db.reviewLogs.where('date').equals(date).toArray();
+}
+
+export async function getReviewLogsByWord(wordId: number): Promise<ReviewLog[]> {
+  return db.reviewLogs.where('wordId').equals(wordId).sortBy('reviewedAt');
+}
+
+/** 记一次复习：更新进度 + 写一条明细 */
+export async function recordReview(params: {
+  wordId: number;
+  lessonId: number;
+  date: string;
+  result: ReviewOutcome;
+  progress: Omit<WordProgress, 'id' | 'wordId'>;
+}): Promise<void> {
+  await upsertProgress({ wordId: params.wordId, ...params.progress });
+  await addReviewLog({
+    wordId: params.wordId,
+    lessonId: params.lessonId,
+    date: params.date,
+    result: params.result,
+    reviewedAt: new Date(),
+  });
 }
 
 // ── Daily Logs ──
@@ -141,7 +270,7 @@ export async function getTotalStats() {
     db.words.count(),
     db.wordProgress.toArray(),
   ]);
-  const mastered = progress.filter(p => p.masteryLevel === 3).length;
+  const mastered = progress.filter(p => p.masteryLevel === 5).length;
   const reviewed = progress.filter(p => p.reviewCount > 0).length;
   return {
     totalLessons: lessons,
@@ -153,13 +282,19 @@ export async function getTotalStats() {
 
 // ── Export / Import ──
 export async function exportAllData() {
-  const [lessons, words, wordProgress, dailyLogs] = await Promise.all([
+  const [lessons, words, wordProgress, dailyLogs, readingLogs, reviewLogs] = await Promise.all([
     db.lessons.toArray(),
     db.words.toArray(),
     db.wordProgress.toArray(),
     db.dailyLogs.toArray(),
+    db.readingLogs.toArray(),
+    db.reviewLogs.toArray(),
   ]);
-  return JSON.stringify({ lessons, words, wordProgress, dailyLogs }, null, 2);
+  return JSON.stringify(
+    { lessons, words, wordProgress, dailyLogs, readingLogs, reviewLogs },
+    null,
+    2
+  );
 }
 
 export async function bulkAddWords(words: Omit<Word, 'id' | 'createdAt'>[]): Promise<void> {
@@ -182,6 +317,8 @@ export async function mergeImportWords(words: Omit<Word, 'id' | 'createdAt'>[]):
     if (existing) {
       await db.words.update(existing.id!, {
         phrase: w.phrase || existing.phrase,
+        // 不覆盖用户自己录的例句
+        example: existing.example || w.example,
         chinese: w.chinese || existing.chinese,
         imageUrl: w.imageUrl || existing.imageUrl,
         imageStatus: w.imageUrl ? 'ready' : existing.imageStatus,
@@ -199,14 +336,22 @@ export async function mergeImportWords(words: Omit<Word, 'id' | 'createdAt'>[]):
 
 export async function importAllData(json: string) {
   const data = JSON.parse(json);
-  await db.transaction('rw', db.lessons, db.words, db.wordProgress, db.dailyLogs, async () => {
-    await db.lessons.clear();
-    await db.words.clear();
-    await db.wordProgress.clear();
-    await db.dailyLogs.clear();
-    if (data.lessons) await db.lessons.bulkAdd(data.lessons);
-    if (data.words) await db.words.bulkAdd(data.words);
-    if (data.wordProgress) await db.wordProgress.bulkAdd(data.wordProgress);
-    if (data.dailyLogs) await db.dailyLogs.bulkAdd(data.dailyLogs);
-  });
+  await db.transaction(
+    'rw',
+    [db.lessons, db.words, db.wordProgress, db.dailyLogs, db.readingLogs, db.reviewLogs],
+    async () => {
+      await db.lessons.clear();
+      await db.words.clear();
+      await db.wordProgress.clear();
+      await db.dailyLogs.clear();
+      await db.readingLogs.clear();
+      await db.reviewLogs.clear();
+      if (data.lessons) await db.lessons.bulkAdd(data.lessons);
+      if (data.words) await db.words.bulkAdd(data.words);
+      if (data.wordProgress) await db.wordProgress.bulkAdd(data.wordProgress);
+      if (data.dailyLogs) await db.dailyLogs.bulkAdd(data.dailyLogs);
+      if (data.readingLogs) await db.readingLogs.bulkAdd(data.readingLogs);
+      if (data.reviewLogs) await db.reviewLogs.bulkAdd(data.reviewLogs);
+    }
+  );
 }

@@ -1,23 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
-  getLesson, getDueWords, getWordsByLesson, getWordProgress, recordReview, upsertDailyLog,
+  getAllDueWords, getAllLessons, recordReview, upsertDailyLog,
 } from '../db/database';
 import Flashcard from '../components/Flashcard';
 import { calcNextReview } from '../utils/spaced-repetition';
 import { todayISO } from '../utils/date';
-import type { Lesson, Word, WordProgress, MasteryLevel, ReviewOutcome } from '../types';
+import type { Word, WordProgress, MasteryLevel, ReviewOutcome } from '../types';
 
-export default function Review() {
-  const { lessonId } = useParams<{ lessonId: string }>();
-  const [searchParams] = useSearchParams();
+/** 一次复习最多做多少个词 —— 小朋友注意力有限，剩下的下次继续 */
+const SESSION_SIZE = 15;
+
+export default function GlobalReview() {
   const navigate = useNavigate();
 
-  /** ?all=1 时不分到期与否，整课过一遍（用于「刚记完，现在就陪他看一遍」）*/
-  const reviewAll = searchParams.get('all') === '1';
-
-  const [lesson, setLesson] = useState<Lesson | null>(null);
   const [items, setItems] = useState<{ word: Word; progress?: WordProgress }[]>([]);
+  const [remaining, setRemaining] = useState(0);
+  const [lessonNames, setLessonNames] = useState<Record<number, string>>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showImage, setShowImage] = useState(true);
   const [flipped, setFlipped] = useState(false);
@@ -27,26 +26,18 @@ export default function Review() {
   const [sessionStats, setSessionStats] = useState({ correct: 0, unknown: 0, wrong: 0 });
 
   useEffect(() => {
-    if (!lessonId) return;
     const load = async () => {
       setLoading(true);
-      const l = await getLesson(Number(lessonId));
-      if (!l) { navigate('/lessons'); return; }
-      setLesson(l);
-
-      if (reviewAll) {
-        const words = await getWordsByLesson(l.id!);
-        const withProgress = await Promise.all(
-          words.map(async word => ({ word, progress: await getWordProgress(word.id!) }))
-        );
-        setItems(withProgress);
-      } else {
-        setItems(await getDueWords(l.id!));
-      }
+      const [due, lessons] = await Promise.all([getAllDueWords(), getAllLessons()]);
+      const map: Record<number, string> = {};
+      for (const l of lessons) map[l.id!] = l.name;
+      setLessonNames(map);
+      setRemaining(Math.max(0, due.length - SESSION_SIZE));
+      setItems(due.slice(0, SESSION_SIZE));
       setLoading(false);
     };
     load();
-  }, [lessonId, navigate, reviewAll]);
+  }, []);
 
   const handleResult = useCallback(async (result: ReviewOutcome) => {
     const item = items[currentIndex];
@@ -83,7 +74,7 @@ export default function Review() {
     } else {
       await upsertDailyLog({
         date: todayISO(),
-        lessonId: Number(lessonId),
+        lessonId: 0, // 0 = 综合复习（跨课程）
         wordsReviewed: items.length,
         wordsCorrect: nextStats.correct,
         wordsWrong: nextStats.wrong + nextStats.unknown,
@@ -91,11 +82,11 @@ export default function Review() {
       });
       setDone(true);
     }
-  }, [currentIndex, items, lessonId, startTime, sessionStats]);
+  }, [currentIndex, items, sessionStats, startTime]);
 
   if (loading) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="h-full flex items-center justify-center pb-20">
         <div className="text-gray-400 animate-pulse">加载中...</div>
       </div>
     );
@@ -107,10 +98,11 @@ export default function Review() {
       <div className="h-full flex flex-col items-center justify-center px-6 pb-20">
         <span className="text-6xl mb-4">{items.length === 0 ? '😌' : '🎉'}</span>
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
-          {items.length === 0 ? '这一课没有待复习的词' : '复习完成！'}
+          {items.length === 0 ? '今天没有要复习的词' : '复习完成！'}
         </h2>
+
         {total > 0 && (
-          <div className="flex gap-5 mb-6 mt-2">
+          <div className="flex gap-5 mb-4 mt-2">
             <div className="text-center">
               <div className="text-2xl font-bold text-kid-success">{sessionStats.correct}</div>
               <div className="text-xs text-gray-500">认识</div>
@@ -125,30 +117,37 @@ export default function Review() {
             </div>
           </div>
         )}
+
+        {remaining > 0 && (
+          <p className="text-sm text-gray-500 mb-6">还有 {remaining} 个词等着，下次接着来 💪</p>
+        )}
+
         <button
-          onClick={() => navigate(reviewAll ? '/' : '/lessons')}
+          onClick={() => navigate('/')}
           className="bg-kid-primary text-white px-8 py-3 rounded-xl font-medium hover:opacity-90"
         >
-          {reviewAll ? '回首页' : '返回课程'}
+          回首页
         </button>
       </div>
     );
   }
 
   const current = items[currentIndex];
+  const sourceLesson = lessonNames[current.word.lessonId];
 
   return (
     <div className="h-full flex flex-col pb-6">
       <div className="px-4 pt-4 pb-2">
         <div className="flex items-center justify-between max-w-md mx-auto mb-3">
           <button
-            onClick={() => navigate(reviewAll ? '/' : '/lessons')}
+            onClick={() => navigate('/')}
             className="text-gray-400 hover:text-gray-600 text-sm font-medium"
           >
-            ← 返回
+            ← 退出
           </button>
           <span className="text-sm font-medium text-gray-500">
             {currentIndex + 1} / {items.length}
+            {remaining > 0 && <span className="text-gray-300"> · 还有 {remaining}</span>}
           </span>
           <button
             onClick={() => setShowImage(!showImage)}
@@ -169,8 +168,8 @@ export default function Review() {
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center px-4">
-        {lesson && (
-          <p className="text-xs text-gray-400 mb-3">📖 {lesson.name}</p>
+        {sourceLesson && (
+          <p className="text-xs text-gray-400 mb-3">📖 {sourceLesson}</p>
         )}
         <Flashcard
           word={current.word}

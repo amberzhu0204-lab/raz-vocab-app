@@ -7,34 +7,56 @@ import Review from './pages/Review';
 import Quiz from './pages/Quiz';
 import Admin from './pages/Admin';
 import Records from './pages/Records';
+import Today from './pages/Today';
+import GlobalReview from './pages/GlobalReview';
 import { db, mergeImportWords } from './db/database';
+
+const STORAGE_KEY = 'raz-data-version';
+
+/**
+ * 导入在一次会话里只跑一次。
+ * React StrictMode 在开发模式下会把 effect 跑两遍，两个并发导入会撞课程主键
+ * （ConstraintError: Key already exists），所以用单例 Promise 兜住。
+ */
+let importOnce: Promise<void> | null = null;
+
+function runImportOnce(onStatus?: (s: string) => void): Promise<void> {
+  if (!importOnce) importOnce = doImport(onStatus);
+  return importOnce;
+}
+
+async function doImport(onStatus?: (s: string) => void): Promise<void> {
+  try {
+    const res = await fetch(import.meta.env.BASE_URL + 'raz-import-data.json?v=2');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.lessons || !data.words) return;
+
+    const storedVersion = localStorage.getItem(STORAGE_KEY);
+    const needsImport = !storedVersion || Number(storedVersion) < (data.dataVersion || 0);
+    if (!needsImport) return;
+
+    onStatus?.('正在更新数据...');
+    // 合并课程：已存在的跳过
+    for (const l of data.lessons) {
+      const existing = await db.lessons.get(l.id);
+      if (!existing) await db.lessons.put(l);
+    }
+    // 单词总是合并更新，保留学习进度
+    await mergeImportWords(data.words);
+    localStorage.setItem(STORAGE_KEY, String(data.dataVersion || 0));
+    onStatus?.('更新完成！');
+  } catch (e) {
+    console.warn('Auto import failed:', (e as Error)?.message || e);
+  }
+}
 
 function AutoImport({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    const init = async () => {
-      const lessonCount = await db.lessons.count();
-      if (lessonCount === 0) {
-        setStatus('正在导入单词数据...');
-        try {
-          const res = await fetch(import.meta.env.BASE_URL + 'raz-import-data.json');
-          if (res.ok) {
-            const data = await res.json();
-            if (data.lessons && data.words) {
-              await db.lessons.bulkAdd(data.lessons);
-              await mergeImportWords(data.words);
-              setStatus('导入完成！');
-            }
-          }
-        } catch (e) {
-          console.warn('Auto import failed:', e);
-        }
-      }
-      setReady(true);
-    };
-    init();
+    runImportOnce(setStatus).finally(() => setReady(true));
   }, []);
 
   if (!ready) {
@@ -59,6 +81,8 @@ export default function App() {
           <main className="flex-1 overflow-hidden">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/today" element={<Today />} />
+              <Route path="/review" element={<GlobalReview />} />
               <Route path="/lessons" element={<Lessons />} />
               <Route path="/lesson/:lessonId/review" element={<Review />} />
               <Route path="/lesson/:lessonId/quiz" element={<Quiz />} />

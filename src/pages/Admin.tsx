@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLessons } from '../hooks/useLessons';
 import { useWords } from '../hooks/useWords';
 import { exportAllData, mergeImportWords, bulkAddWords, db } from '../db/database';
+import { todayISO } from '../utils/date';
 import LessonForm from '../components/LessonForm';
 import WordForm from '../components/WordForm';
 import ImagePicker from '../components/ImagePicker';
@@ -57,7 +58,7 @@ export default function Admin() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `raz-vocab-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `raz-vocab-backup-${todayISO()}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -106,16 +107,19 @@ export default function Admin() {
       // Support formats:
       // "word"
       // "word | chinese"
-      // "word | chinese | phrase"
-      // "word | chinese | phrase | imageUrl"
+      // "word | chinese | 例句"
+      // "word | chinese | 例句 | imageUrl"
       const parts = line.split('|').map(s => s.trim());
+      const sentence = parts[2] || '';
       words.push({
         lessonId: batchLessonId,
         word: parts[0] || '',
         chinese: parts[1] || '',
-        phrase: parts[2] || '',
+        phrase: sentence,
+        example: sentence,
         imageUrl: parts[3] || '',
         imageStatus: parts[3] ? 'ready' : 'pending',
+        learnedDate: todayISO(),
       });
     }
 
@@ -371,7 +375,9 @@ export default function Admin() {
                         </button>
                       </div>
                     </div>
-                    {word.phrase && <p className="text-sm text-gray-500 mb-2">{word.phrase}</p>}
+                    {(word.example || word.phrase) && (
+                      <p className="text-sm text-gray-500 mb-2">{word.example || word.phrase}</p>
+                    )}
 
                     <div className="flex items-center gap-3">
                       {word.imageUrl && word.imageStatus === 'ready' ? (
